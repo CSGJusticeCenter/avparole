@@ -1,0 +1,26 @@
+#######################################
+# Project: AV Parole
+# File: app.R
+# Authors: Mari Roberts
+# Date last updated: March 13, 2023 (MR)
+# Description:
+#    shinyApp function
+#######################################
+
+# Add fonts to shiny linux server
+if (Sys.info()[['sysname']] == 'Linux') {
+  dir.create('~/.fonts')
+  fonts = c(
+    "www/fonts/Graphik.ttf",
+    "www/fonts/GraphikBold.ttf"
+  )
+  file.copy(fonts, "~/.fonts")
+  system('fc-cache -f ~/.fonts')
+}
+
+# run ui and server code
+source("ui.R")
+source("server.R")
+
+# launch shiny app
+shinyApp(ui = ui, server = server)
