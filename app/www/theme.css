@@ -156,9 +156,24 @@ Title and value boxes
 /* Title of state settings */
 #selected-state {
   text-align: left;
-  /*font-weight: bold;*/
-  font-size: 30px;
+  font-size: 38px;
   font-family: Graphik;
   font-weight: bold;
 }
 
+
+/* Title of visualization settings */
+#viz-header {
+  text-align: left;
+  font-size: 28px;
+  font-family: Graphik;
+  font-weight: bold;
+}
+
+/* Sentence description of visualization settings */
+#viz-sentence {
+  text-align: left;
+  font-size: 16px;
+  font-family: Graphik;
+  /*font-weight: bold;*/
+}

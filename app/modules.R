@@ -7,33 +7,90 @@
 #    Load data files created in other R files needed for app
 #######################################
 
-
-
-
-
-
-
 load(file = "data/parole_eligibility_table_2020.Rda")
 load(file = "data/parole_eligibility_table_2020_reactable.Rda")
+load(file = "data/current_ped_2020_offenses.Rda")
 
+
+
+
+########################################################################################################################
+
+# Parole Eligibility
+
+########################################################################################################################
 
 parole_eligibility_ui <- function(id) {
+  fluidRow(table_ui(NS(id, "metric")))
+}
+
+parole_eligibility_server <- function(id, df) {
+  moduleServer(id, function(input, output, session) {
+    table_server("metric", df)})
+}
+
+ped_offense_type_ui <- function(id) {
+  fluidRow(table_ui(NS(id, "metric")))
+}
+
+ped_offense_type_server <- function(id, df) {
+  moduleServer(id, function(input, output, session) {
+    table_server_ped_offense_type("metric", df)})
+}
+
+ped_offense_type_sentence_ui <- function(id) {
+  fluidRow(sentence_ui(NS(id, "metric")))
+}
+
+ped_offense_type_sentence_server <- function(id, df) {
+  moduleServer(id, function(input, output, session) {
+    sentence_server("metric", df)})
+}
+
+
+
+############################################################################################################
+
+# TEXT
+
+############################################################################################################
+
+sentence_ui <- function(id) {
 
   fluidRow(
-    table_ui(NS(id, "metric"))
+    column(1),
+    column(10,  div(id = "viz-sentence", textOutput(NS(id, "text")))),
+    column(1),
   )
 
 }
 
-parole_eligibility_server <- function(id, df) {
+sentence_server <- function(id, df) {
 
   moduleServer(id, function(input, output, session) {
 
-    table_server("metric", df)
+    text <- reactive({formulate_sentence(df())})
+    output$text <- renderText({text()})
 
   })
-
 }
+
+formulate_sentence <- function(df) {
+  df1 <- df %>% select(-state, -yearendpop_ped) %>%
+    slice_max(prop)
+  most_common_offense_type <- df1$offgeneral
+  number_of_people <- sum(df1$n)
+  sentence <- paste0("Of the ", scales::comma(number_of_people), " people eligible for release before 2020 but not yet released, the most serious offense type was ", tolower(most_common_offense_type), ".", sep = "")
+  return(sentence)
+}
+
+
+############################################################################################################
+
+# TABLES
+
+############################################################################################################
+
 
 table_ui <- function(id) {
 
@@ -54,6 +111,33 @@ table_server <- function(id, df) {
 
   })
 }
+
+table_server_ped_offense_type <- function(id, df) {
+
+  moduleServer(id, function(input, output, session) {
+
+    table <- reactive({viz_reactable_ped_offense_type(df())})
+    output$table <- renderReactable({table()})
+
+  })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+############################################################################################################
+
+# REACTABLE
+
+############################################################################################################
 
 viz_reactable <- function(df) {
   df1 <- df %>% select(-state)
@@ -83,4 +167,31 @@ viz_reactable <- function(df) {
             ))
 }
 
+viz_reactable_ped_offense_type <- function(df) {
+  df1 <- df %>% select(-state, -yearendpop_ped) %>% arrange(-n)
+  reactable(df1,
+            style = list(fontFamily = "Graphik, sans-serif",
+                         fontSize = "1.5rem"
+            ),
+            theme = reactableTheme(cellStyle = list(display = "flex", flexDirection = "column", justifyContent = "center")),
+            defaultColDef = colDef(format = colFormat(separators = TRUE), align = "center"),
+            compact = TRUE,
+            fullWidth = FALSE,
+            columns = list(
+              offgeneral    = colDef(name = "Offense Type",
+                                     minWidth = 200,
+                                     style = list(position = "sticky", borderRight = "1px solid #d3d3d3")),
+              n = colDef(name = "Number of People Arrested (N)",
+                                     minWidth = 95),
+              prop   = colDef(name = "Proportion of People Arrested (%)",
+                                     minWidth = 95,
+                                     format = colFormat(percent = TRUE, digits = 1))
+            ))
+}
 
+
+##############################
+
+
+
+##############################

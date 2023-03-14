@@ -11,27 +11,6 @@ source("library.R")
 source("colors.R")
 source("modules.R")
 
-# ui <- fluidPage(includeCSS("www/theme.css"),
-#
-#   titlePanel("AV Parole Project"),
-#
-#   sidebarLayout(
-#     sidebarPanel = sidebarPanel(
-#       selectInput("state", "State",
-#                   choices = unique(parole_eligibility_table_2020$state),
-#                   selected = "California"
-#       )
-#     ),
-#     mainPanel = mainPanel(
-#       h2(textOutput("state_title")),
-#       "<br>",
-#       "<br>",
-#       h3("Parole Eligibility in 2020"),
-#       parole_eligibility_ui("parole_eligibility_reactable")
-#     )
-#   )
-# )
-
 ui <- fluidPage(includeCSS("www/theme.css"),
 
                 navbarPage(id = "navbarID",
@@ -61,7 +40,7 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                                           column(width = 8, align = "left", class = "input-col",
                                                  selectInput("state", "State",
                                                              choices = unique(parole_eligibility_table_2020$state),
-                                                             selected = "California")),
+                                                             selected = "Georgia")),
                                           column(width = 2)
                                         ) # fluidRow
                                     ), # end div header
@@ -70,17 +49,33 @@ ui <- fluidPage(includeCSS("www/theme.css"),
 
                                     div(id = "app-body",
 
-                                        #######
-                                        # Value boxes
-                                        #######
+                                        ##########################################
+                                        # State Report
+                                        ##########################################
 
+                                        # STATE SELECTED
                                         fluidRow(column(width = 1),
-                                                 column(width = 10, div(id = "selected-state", textOutput("selected_state"))),
-                                                 column(width = 1)),
+                                                 column(width = 10,
+                                                        div(id = "selected-state",
+                                                            textOutput("selected_state"))),
+                                                 column(width = 1)),                                        br(),br(),br(),
 
-                                        br(), br(), br(),
+                                        # PAROLE ELIGIBILITY
+                                        fluidRow(column(width = 1),
+                                                 column(width = 10,
+                                                        div(id = "viz-header",
+                                                            textOutput("parole_eligibility_viz_title"))),
+                                                 column(width = 1)),                                        br(), br(),
+                                        parole_eligibility_ui("parole_eligibility_reactable"),              br(), br(), br(),
 
-                                        parole_eligibility_ui("parole_eligibility_reactable")
+                                        # ELIGIBILITY AND OFFENSES
+                                        fluidRow(column(width = 1),
+                                                 column(width = 10,
+                                                        div(id = "viz-header",
+                                                            textOutput("ped_offense_type_viz_title"))),
+                                                 column(width = 1)),                                        br(),br(),
+                                        ped_offense_type_sentence_ui("ped_offense_type_sentence"),          br(),
+                                        ped_offense_type_ui("ped_offense_type_reactable"),                  br(), br(), br()
 
                                     ) # end div
 

@@ -7,12 +7,17 @@
 #    Parole eligibility tables and graphics for shiny app
 #######################################
 
+##########
+# Parole Eligibility in 2020
+##########
+
 # filter to 2020 data
 parole_elgibility_2020 <- yearendpop %>%
   filter(rptyear == 2020) %>%
   fnc_create_parelig_status() %>%
   mutate(
-    state = str_sub(state, 6, -1)
+    state = str_sub(state, 6, -1),
+    offgeneral = str_sub(offgeneral, 5, -1)
   )
 
 # get number and proportion of eligibility statuses
@@ -80,6 +85,26 @@ parole_eligibility_table_2020_reactable <-
                                      format = colFormat(percent = TRUE, digits = 1))
             ))
 
+
+
+
+##########
+# Offenses for those in prison but not released
+##########
+
+current_ped_2020_offenses <- parole_elgibility_2020 %>%
+  filter(parelig_status == "Current") %>%
+  group_by(state) %>%
+  count(offgeneral) %>%
+  mutate(
+    prop = n/sum(n)
+    , yearendpop_ped = sum(n)
+  ) %>%
+  ungroup() %>%
+  filter(!is.na(offgeneral))
+
+
+
 ##########
 # Save data
 ##########
@@ -90,5 +115,6 @@ for (folder in theseFOLDERS){
 
   save(parole_eligibility_table_2020,           file=file.path(folder, "parole_eligibility_table_2020.Rda"))
   save(parole_eligibility_table_2020_reactable, file=file.path(folder, "parole_eligibility_table_2020_reactable.Rda"))
+  save(current_ped_2020_offenses,               file=file.path(folder, "current_ped_2020_offenses.Rda"))
 
 }
