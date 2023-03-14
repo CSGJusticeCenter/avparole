@@ -11,37 +11,21 @@ source("library.R")
 source("colors.R")
 source("dataframes.R")
 
-# data prep ----
-ua_data <-
-  nycflights13::flights %>%
-  filter(carrier == "UA") %>%
-  mutate(ind_arr_delay = (arr_delay > 5)) %>%
-  group_by(year, month, day) %>%
-  summarize(
-    n = n(),
-    across(ends_with("delay"), mean, na.rm = TRUE)
-  ) %>%
-  ungroup()
-
 ui <- fluidPage(
 
-  titlePanel("Flight Delay Report"),
+  titlePanel("AV Parole Project"),
 
   sidebarLayout(
     sidebarPanel = sidebarPanel(
-      selectInput("month", "Month",
-                  choices = setNames(1:12, month.abb),
-                  selected = 1
+      selectInput("state", "State",
+                  choices = unique(parole_eligibility_table_2020$state),
+                  selected = "California"
       )
     ),
     mainPanel = mainPanel(
-      h2(textOutput("title")),
-      h3("Average Departure Delay"),
-      metric_ui("dep_delay"),
-      h3("Average Arrival Delay"),
-      metric_ui("arr_delay"),
-      h3("Proportion Flights with >5 Min Arrival Delay"),
-      metric_ui("ind_arr_delay")
+      h2(textOutput("state_title")),
+      h3("Eligible for Parole"),
+      parole_eligibility_ui("parole_eligibility_reactable")
     )
   )
 )
