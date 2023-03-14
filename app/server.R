@@ -9,7 +9,7 @@
 
 server <- function(input, output, session) {
 
-  output$state_title <- renderText({input$state})
+  output$selected_state <- renderText({input$state})
 
   df_parole_eligibility <- reactive({filter(parole_eligibility_table_2020, state == input$state)})
   parole_eligibility_server("parole_eligibility_reactable", df_parole_eligibility)

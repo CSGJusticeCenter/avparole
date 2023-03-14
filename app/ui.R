@@ -9,23 +9,80 @@
 
 source("library.R")
 source("colors.R")
-source("dataframes.R")
+source("modules.R")
 
-ui <- fluidPage(
+# ui <- fluidPage(includeCSS("www/theme.css"),
+#
+#   titlePanel("AV Parole Project"),
+#
+#   sidebarLayout(
+#     sidebarPanel = sidebarPanel(
+#       selectInput("state", "State",
+#                   choices = unique(parole_eligibility_table_2020$state),
+#                   selected = "California"
+#       )
+#     ),
+#     mainPanel = mainPanel(
+#       h2(textOutput("state_title")),
+#       "<br>",
+#       "<br>",
+#       h3("Parole Eligibility in 2020"),
+#       parole_eligibility_ui("parole_eligibility_reactable")
+#     )
+#   )
+# )
 
-  titlePanel("AV Parole Project"),
+ui <- fluidPage(includeCSS("www/theme.css"),
 
-  sidebarLayout(
-    sidebarPanel = sidebarPanel(
-      selectInput("state", "State",
-                  choices = unique(parole_eligibility_table_2020$state),
-                  selected = "California"
-      )
-    ),
-    mainPanel = mainPanel(
-      h2(textOutput("state_title")),
-      h3("Eligible for Parole"),
-      parole_eligibility_ui("parole_eligibility_reactable")
-    )
-  )
-)
+                navbarPage(id = "navbarID",
+
+                           # formats light blue header
+                           tags$style(type = "text/css", ".container-fluid {padding-left:0px; padding-right:0px;}"),
+                           tags$style(type = "text/css", ".navbar {margin-bottom: .5px;}"),
+                           tags$style(type = "text/css", ".container-fluid .navbar-header .navbar-brand {margin-left: 0px;}"),
+
+                           # hide errors on user-end
+                           tags$style(type="text/css",
+                                      ".shiny-output-error { visibility: hidden; }",
+                                      ".shiny-output-error:before { visibility: visible; content: ''; }"),
+
+                           title = "AV Parole Dashboard",
+                           tags$html(lang="en"),
+
+                           tabPanel("statereports", id = "statereports",
+
+                                    #######
+                                    # Dropdown and download buttons
+                                    #######
+
+                                    div(id = "app-header",
+                                        fluidRow(# Select State
+                                          column(width = 2),
+                                          column(width = 8, align = "left", class = "input-col",
+                                                 selectInput("state", "State",
+                                                             choices = unique(parole_eligibility_table_2020$state),
+                                                             selected = "California")),
+                                          column(width = 2)
+                                        ) # fluidRow
+                                    ), # end div header
+
+                                    br(), br(),
+
+                                    div(id = "app-body",
+
+                                        #######
+                                        # Value boxes
+                                        #######
+
+                                        fluidRow(column(width = 1),
+                                                 column(width = 10, div(id = "selected-state", textOutput("selected_state"))),
+                                                 column(width = 1)),
+
+                                        br(), br(), br(),
+
+                                        parole_eligibility_ui("parole_eligibility_reactable")
+
+                                    ) # end div
+
+                           ) # end tabPanel
+                ))

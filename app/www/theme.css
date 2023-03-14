@@ -2,33 +2,13 @@
 Screen Settings
 ########################################*/
 
-/* Hide navigation bar menu items */
-#navbarID{
-  display:none;
-}
-
-/* Adds white space on sides of navbar
-body > div {
-  max-width: 1200px;
-}*/
-
-  /* Very top of page spans entire width
-#page-top {
-height: auto;
-width: 100vw;
-margin-left: calc(50% - 50vw);
-padding: 0;
-padding-top: 6PX;
-position: relative;
-}*/
-
-/* Make body smaller width than header which spans the entire page */
-/* Center everything */
 #app-body {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
 }
+
+
 
 /*######################################
 Font size and style
@@ -45,16 +25,13 @@ Font size and style
     font-weight: bold;
 }
 
-/* Make some wordy sections smaller
-.small_text {
-  font-size: small;
-}
-
 /* Change font family throughout - DO NOT USE WITH PICKERINPUT
   when set the entire font to 'Graphik' the emojis used
   in the download data button and pickerinput selection (checkmarks)
-  will not render because they aren't in the correct font /*
-/*{font-family: "Graphik", sans-serif !important;}
+  will not render because they aren't in the correct font
+  {font-family: "Graphik" !important;}*/
+*{font-family: "Graphik";}
+
 
 /*##################################################################################################################
 Navigation Bar
@@ -65,6 +42,7 @@ Navigation Bar
   display:none !important;
 }
 
+
 /*##################################################################################################################
 Header and global drop down options
 ####################################################################################################################*/
@@ -72,33 +50,25 @@ Header and global drop down options
 /* Remove rounded edges from drop downs and make blue */
 .selectize-input, .selectize-input.dropdown-active, .selectize-dropdown, .selectize-dropdown-content .active {
   border-radius:0px;
-  color: #004270;
+  color: #3E4B4B;
 }
-
-
-
-/* picker input styling */
-
 
 /* color drop-down menu items (specifically, non-selected items) */
 .dropdown-menu ul li a {
-  color: #004270 !important;
+  color: #3E4B4B !important;
   font-family: Graphik;
 }
 
-
 /* color of selected item in drop down */
 .dropdown-menu>.active>a, .dropdown-menu>.active>a:focus {
-  color: #004270 !important;
+  color: #3E4B4B !important;
   background-color: #fff;
 }
 
 /* color background of selected item when hover over it */
 .dropdown-menu>.active>a:hover {
-  background-color: #f5f5f5;
+  background-color: ##F4F6F6;
 }
-
-
 
 /* Top of page is a small grid of controls and info*/
 /* Can change background of header here background-color:#DEF0F6; */
@@ -107,7 +77,7 @@ Header and global drop down options
   /*width: 768px;
   display: -ms-flexbox;
   display: flex; vertically aligns to the left */
-  background-color:#DDE3E9 !important;
+  background-color:#DADFDF !important;
   /*height: 100px;*/
   min-height: 7.0em;
   /*padding: 0 0px;*/
@@ -132,14 +102,14 @@ button > div {
   white-space: visible;
 }
 
-/* Makes the label for header inputs sit centered on top */
+/* Makes the label for header inputs sit left on top */
 #header > * > span {
-  text-align: center;
+  text-align: left;
 }
 
 /* Format state header, same as map explorer header and download data header */
 #app-header {
-  background-color:#DDE3E9 !important;
+  background-color:#DADFDF !important;
   /*height: 100px;*/
   min-height: 7.0em;
   /*padding: 0 0px;*/
@@ -147,8 +117,10 @@ button > div {
   margin-right: auto;
 }
 
+
+
+
 /*##################################################################################################################
-MAP EXPLORER
 Dropdowns and buttons
 ####################################################################################################################*/
 
@@ -158,372 +130,35 @@ Dropdowns and buttons
   max-width: 20em;
   margin-top: 1em;
   text-align: left;
-  color: #004270;
+  color: #3E4B4B;
   font-family: Graphik;
 }
-
 
 .input-col {
   min-width: 12em;
-  padding-left: 0px;
+  margin-top: 1em;
+  padding-left: 5px;
   padding-right: 0px;
-}
-
-/* Format for download map button */
-.download-map {
-  margin: 2.75em 1em 2.75em 1em;
-  border-radius:0px;
-  color: #004270;
   text-align: left;
-  width: 15em;
-  /* width: 175px;*/
-  background-color:#004270;
-  color: #fff;
+  color: #3E4B4B;
   font-family: Graphik;
 }
 
-/*######################################
-MAP EXPLORER
-Hex map
-########################################*/
 
-/* Map select input margins and font style */
-  /* Text inputs bottom margin prevents it from lining up nicely, so remove */
-.form-group.shiny-input-container, .selectize-control {
-  margin-bottom: 0;
-}
 
-/* Title of map settings*/
-#selected-map {
-  text-align: center;
-  font-size: 30px;
-  font-family: Graphik;
-  font-weight: bold;
-}
 
-/* Map settings*/
-#hex-map{
-  text-align: center;
-  /*font-weight: bold;
-  font-size: 30px;
-  font-family: Graphik;*/
-}
+
 
 /*######################################
-MAP EXPLORER
-Table
-########################################*/
-
-/* Title of table under map settings */
-#selected-map-table{
-  text-align: center;
-  font-size: 30px;
-  font-family: Graphik !important;
-  font-weight: bold;
-  /* Align text with search bar */
-  /*position: relative; top: 30px;*/
-}
-
-/* Table under map settings */
-#table-map {
-  text-align: center; /* not working */
-  /*white-space: nowrap;*/
-}
-
-/* Change search bar appearance - need to figure out how to keep the style consistent when clicked*/
-#table-map input {
-  border-radius: 0px;
-  border: 3px color: #004270;
-  width: 275px;
-  height: 32px;
-  background: #FFFFFF;
-  position: relative; bottom: 10px;
-  /*position: relative; bottom: 30px;*/
-}
-
-/*
-  .dataTables_filter {
-    position: relative;
-  }
-.dataTables_filter .fa-search {
-  position: absolute;
-  top: 10px;
-  left: auto;
-  right: 10px;
-}*/
-
-  /*##################################################################################################################
-STATE REPORTS
-Dropdowns
-####################################################################################################################*/
-
-/* Format download chart button */
-.download-chart {
-  border-radius:0px;
-  color: #fff;
-  border-color: #fff;
-  text-align: left;
-  width: 3em;
-  background-color:#fff;
-  color: #000000;
-  font-family: Graphik;
-}
-
-/*######################################
-STATE REPORTS
 Title and value boxes
 ########################################*/
 
 /* Title of state settings */
 #selected-state {
-  text-align: center;
+  text-align: left;
   /*font-weight: bold;*/
   font-size: 30px;
   font-family: Graphik;
   font-weight: bold;
-}
-
-/*######################################
-STATE REPORTS
-Tabset Panels
-########################################*/
-
-/* Pop up for RE tab resizes for content*/
-.modal-dialog {
-    width: fit-content !important;
-}
-.modal-content {
-    font-family: Graphik;
-    border-radius:0px;
-}
-.close {
-    border-radius:0px;
-}
-
-/* Tab formatting - figure out how to change width */
-  .nav {
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-    margin: 0;
-    width: 100%
-    display: inline;
-    padding: 1px 0; /* raise tabs slightly above line */
-  }
-
-.nav-tabs > li {
-  float:none;
-  display:inline-block; /* maintains horizontal tab structure for parole, prob and revocations */
-  zoom:1;
-  width: 150px;
-  padding: 0px 14px; /* changes spacing between tabpanels */
-  font-family: Graphik;
-}
-
-.nav-tabs {
-  text-align:center;
-  border-bottom: #cccccc !important;
-  border-bottom-style: solid !important;
-  border-bottom-width: 1px !important;
-  font-size: 14px;
-  font-family: Graphik;
-}
-
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
-  color: #FFFFFF;
-  cursor: default;
-  background-color: #004270;
-  border-bottom-color: #cccccc;
-  font-family: Graphik;
-}
-
-.nav-tabs>li>a {
-  margin-right: 2px;
-  line-height: 1.42857143; /* height of tab panel buttons */
-  border-radius: 0px 0px 0 0;
-  background-color: #F4F6F8;
-  color: #004270;
-  font-family: Graphik;
-}
-
-/* Affects top nav bar
-.nav>li>a:focus, .nav>li>a:hover {
-  text-decoration: none;
-  background-color: transparent;
-  border: 2px solid #cccccc;
-}*/
-
-/* State note title setting */
-#selected-state-note-title {
-  text-align: center;
-  font-size: 30px;
-  font-family: Graphik;
-  font-weight: bold;
-}
-
-/* State note setting */
-#selected-state-note {
-  text-align: left;
-  font-family: Graphik;
-}
-
-/* place holder for state notes on overview tab */
-/* can add additional styling using this */
-p.statetxt {
-}
-
-/* State note setting */
-#consistent-state-note {
-  text-align: left;
-  font-style: italic;
-  font-family: Graphik;
-}
-
-
-div.retxt {
-  font-family: Graphik;
-  font-size: 1em;
-  margin-top: 10px;
-}
-
-div.notetxt {
-  font-family: Graphik;
-  font-size: 1em;
-  margin-top: 10px;
-}
-
-h3.nodata {
-  font-family: Graphik !important;
-  font-weight: bold !important;
-  font-size: 30px !important;  /*same as selected-state-note-title */
-  margin-bottom: 12px;
-}
-
-
-h3.reh3 {
-  font-family: Graphik !important;
-  font-weight: bold !important;
-  font-size: 30px !important;  /*same as selected-state-note-title */
-  margin-bottom: 12px;
-}
-
-
-
-h4.reh4 {
-  font-family: Graphik !important;
-  font-weight: bold !important;
-  font-size: 22px; /* same as selected-state-note-title */
-  margin-top: 18px;
-  margin-bottom: 12px;
-  color: #004270;
-  padding-top: 24px;
-  /*text-transform: uppercase; */
-  /*font-variant: small-caps; */
-}
-
-
-.resubtitle{
-  font-family: Graphik;
-  font-size: 18px;
-}
-
-.re-picker, .re-picker:hover, .re-picker:active, .re-picker:focus {
-  color: #004270;
-  border-radius:0px;
-  font-size: 30px;
-  font-family: Graphik;
-  font-weight: bold;
-  font-family: Graphik !important;
-  /* margin-bottom: 12px; */
-  text-decoration-line: underline;
-  background-color: #fff;
-  padding: 0px 0.1em;
-}
-
-
-ul.calctxt {
-  padding-left: 16px;
-  padding-top: 0.25em;
-}
-
-
-
-.checkbox {
-  font-family: Graphik;
-}
-
-/* color of checked box */
-input[type=checkbox] {
-  accent-color: #004270;
-}
-
-
-
-/* Blue background when checked */
-.custom-control-input:checked~.custom-control-label::before {
-    color: #fff;
-    border-color: red !important;
-    background-color: red !important;
-}
-
-
-/*##################################################################################################################
-DOWNLOAD DATA
-Dropdowns
-####################################################################################################################*/
-
-/*.dropdown-menu span {text-align: left; width: 100%;}*/
-
-/* Format for selector input for download page*/
-
-
-
-.picker-style, .picker-style:hover, .picker-style:active, .picker-style:focus {
-  color: #004270;
-  border-radius:0px;
-  font-family: Graphik;
-  background-color:#FFFFFF;
-}
-
-.picker-style {
-  width: 90%;
-  max-width: 20em;
-}
-
-/* Format for download data button */
-.download-btn-lg {
-  width: 90%;
-  max-width: 20em;
-  min-width: 10em;
-  margin-top: 2.8em;
-  margin-bottom: 0.4em;
-  border-radius:0px;
-  color: #fff;
-  background-color:#004270;
-  text-align: left;
-  font-family: Graphik;
-  font-weight: bold;
-}
-
-  /* Title of download page */
-#download-title {
-  text-align: center;
-  font-size: 30px;
-  font-family: Graphik;
-  font-weight: bold;
-}
-
-/* Title of data table selected for download */
-#download-data-title {
-  text-align: left;
-  font-family: Graphik;
-  font-weight: bold;
-  font-size: 24px;
-}
-
-/* Download info setting */
-#download-info {
-  text-align: left;
-  font-family: Graphik;
 }
 

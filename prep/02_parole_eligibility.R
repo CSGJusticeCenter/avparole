@@ -34,7 +34,8 @@ parole_eligibility_table_2020 <- parole_eligibility_counts_2020 %>%
   )) %>%
   select(state, yearendpop, name, value) %>%
   pivot_wider(names_from = name, values_from = value) %>%
-  clean_names()
+  clean_names() %>%
+  select(-c(missing_count, missing_perc))
 
 parole_eligibility_missing_states_2020 <- paste(state.name[!state.name %in% parole_eligibility_table_2020$state], collapse = ", ") # Arizona, Michigan, New Jersey, New Mexico
 
@@ -58,12 +59,12 @@ parole_eligibility_table_2020_reactable <-
                                      minWidth = 95,
                                      style = list(position = "sticky", borderRight = "1px solid #d3d3d3")),
 
-              missing_count = colDef(name = "Missing Parole Eligibility Data in 2020 (N)",
-                                     minWidth = 95),
-              missing_perc  = colDef(name = "Missing Parole Eligibility Data in 2020 (%)",
-                                     minWidth = 95,
-                                     format = colFormat(percent = TRUE, digits = 1),
-                                     style = list(position = "sticky", borderRight = "1px solid #d3d3d3")),
+              # missing_count = colDef(name = "Missing Parole Eligibility Data in 2020 (N)",
+              #                        minWidth = 95),
+              # missing_perc  = colDef(name = "Missing Parole Eligibility Data in 2020 (%)",
+              #                        minWidth = 95,
+              #                        format = colFormat(percent = TRUE, digits = 1),
+              #                        style = list(position = "sticky", borderRight = "1px solid #d3d3d3")),
 
               current_count = colDef(name = "Currently Eligible for Parole in 2020 (N)",
                                      minWidth = 95),

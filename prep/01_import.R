@@ -15,6 +15,7 @@ load(paste0(sp_data_path, "/data/raw/ICPSR_38492-V1/ICPSR_38492/DS0003/38492-000
 load(paste0(sp_data_path, "/data/raw/ICPSR_38492-V1/ICPSR_38492/DS0004/38492-0004-Data.rda"))
 
 # rename df names and clean variable names
-admissions <- da38492.0002 %>% clean_names()
-population <- da38492.0003 %>% clean_names()
-yearendpop <- da38492.0004 %>% clean_names()
+term_records <- da38492.0001 %>% clean_names()
+admissions   <- da38492.0002 %>% clean_names()
+population   <- da38492.0003 %>% clean_names()
+yearendpop   <- da38492.0004 %>% clean_names()

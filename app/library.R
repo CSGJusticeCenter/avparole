@@ -12,8 +12,6 @@ library(shiny)
 library(shinyWidgets)
 library(dashboardthemes)
 library(shinydashboard)
-library(extrafont)
-library(showtext)
 library(dplyr)
 library(ggplot2)
 

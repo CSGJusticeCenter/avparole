@@ -22,6 +22,9 @@ library(janitor)
 library(highcharter)
 library(tidyverse)
 library(reactable)
+library(sysfonts)
+library(extrafont)
+library(showtext)
 
 # CHANGE THIS TO YOUR PROJECT PATH
 # csg_set_project_path(project = "AVParole", sp_folder = "C:/Users/mroberts/The Council of State Governments/JC Research - RES_Parole", force = TRUE)
@@ -29,7 +32,12 @@ library(reactable)
 # Save data path
 sp_data_path <- csg_get_project_path("AVParole")
 
-
+# Load fonts
+font_add("Graphik",     regular = "app/www/fonts/Graphik.ttf")
+font_add("GraphikBold", regular = "app/www/fonts/GraphikBold.ttf")
+extrafont::loadfonts(quiet = TRUE)
+loadfonts(device="win")
+showtext_auto()
 
 ##########
 # Custom functions
