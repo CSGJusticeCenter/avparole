@@ -17,7 +17,9 @@ parole_elgibility_2020 <- yearendpop %>%
   fnc_create_parelig_status() %>%
   mutate(
     state = str_sub(state, 6, -1),
-    offgeneral = str_sub(offgeneral, 5, -1)
+    offgeneral = str_sub(offgeneral, 5, -1),
+    race = str_sub(race, 5, -1)
+
   )
 
 # get number and proportion of eligibility statuses
@@ -89,11 +91,12 @@ parole_eligibility_table_2020_reactable <-
 
 
 ##########
-# Offenses for those in prison but not released
+# Offenses for those in prison but not released in 2020
 ##########
 
 current_ped_2020_offenses <- parole_elgibility_2020 %>%
   filter(parelig_status == "Current") %>%
+  filter(!is.na(offgeneral)) %>%
   group_by(state) %>%
   count(offgeneral) %>%
   mutate(
@@ -101,7 +104,19 @@ current_ped_2020_offenses <- parole_elgibility_2020 %>%
     , yearendpop_ped = sum(n)
   ) %>%
   ungroup() %>%
-  filter(!is.na(offgeneral))
+  mutate(tooltip = paste0("<b>", state, " - ", offgeneral, "</b><br>", paste(round(prop*100, 1), "%", sep = ""), "<br>"))
+
+current_ped_2020_race <- parole_elgibility_2020 %>%
+  filter(parelig_status == "Current") %>%
+  filter(!is.na(race)) %>%
+  group_by(state) %>%
+  count(race) %>%
+  mutate(
+    prop = n/sum(n)
+    , yearendpop_ped = sum(n)
+  ) %>%
+  ungroup() %>%
+  mutate(tooltip = paste0("<b>", state, " - ", race, "</b><br>", paste(round(prop*100, 1), "%", sep = ""), "<br>"))
 
 
 
@@ -116,5 +131,6 @@ for (folder in theseFOLDERS){
   save(parole_eligibility_table_2020,           file=file.path(folder, "parole_eligibility_table_2020.Rda"))
   save(parole_eligibility_table_2020_reactable, file=file.path(folder, "parole_eligibility_table_2020_reactable.Rda"))
   save(current_ped_2020_offenses,               file=file.path(folder, "current_ped_2020_offenses.Rda"))
+  save(current_ped_2020_race,                   file=file.path(folder, "current_ped_2020_race.Rda"))
 
 }

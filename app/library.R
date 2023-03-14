@@ -23,11 +23,18 @@ library(scales)
 # Check the fonts path of your system
 font_paths() # "C:\\Windows\\Fonts"
 
-# Add a custom font. You will need to run this code every time you restart R
-# Make sure you download the Franklin Gothic Book font to your computer
-font_add(family  = "Franklin Gothic Book",
-         regular = "FRABK.ttf",
-         italic  = "FRABKIT.ttf",
-         bold    = "FRADM.ttf")
+# # Add a custom font. You will need to run this code every time you restart R
+# # Make sure you download the Franklin Gothic Book font to your computer
+# font_add(family  = "Franklin Gothic Book",
+#          regular = "FRABK.ttf",
+#          italic  = "FRABKIT.ttf",
+#          bold    = "FRADM.ttf")
+# showtext_auto()
+# default_fonts <- c("Franklin Gothic Book")
+
+# Load fonts
+font_add("Graphik",     regular = "www/fonts/Graphik.ttf")
+font_add("GraphikBold", regular = "www/fonts/GraphikBold.ttf")
+extrafont::loadfonts(quiet = TRUE)
+loadfonts(device="win")
 showtext_auto()
-default_fonts <- c("Franklin Gothic Book")

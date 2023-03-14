@@ -9,6 +9,7 @@
 
 source("library.R")
 source("colors.R")
+source("functions.R")
 source("modules.R")
 
 ui <- fluidPage(includeCSS("www/theme.css"),
@@ -60,6 +61,7 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                                                             textOutput("selected_state"))),
                                                  column(width = 1)),                                        br(),br(),br(),
 
+
                                         # PAROLE ELIGIBILITY
                                         fluidRow(column(width = 1),
                                                  column(width = 10,
@@ -68,6 +70,8 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                                                  column(width = 1)),                                        br(), br(),
                                         parole_eligibility_ui("parole_eligibility_reactable"),              br(), br(), br(),
 
+
+
                                         # ELIGIBILITY AND OFFENSES
                                         fluidRow(column(width = 1),
                                                  column(width = 10,
@@ -75,7 +79,16 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                                                             textOutput("ped_offense_type_viz_title"))),
                                                  column(width = 1)),                                        br(),br(),
                                         ped_offense_type_sentence_ui("ped_offense_type_sentence"),          br(),
-                                        ped_offense_type_ui("ped_offense_type_reactable"),                  br(), br(), br()
+
+                                        fluidRow(column(width = 1),
+                                                 column(width = 4,
+                                                        ped_offense_type_ui("ped_offense_type_reactable")),
+                                                 column(width = 6,
+                                                        ped_offense_type_pie_ui("ped_offense_type_pie")),
+                                                 column(width = 1)),                                        br(), br(), br()
+
+                                        # ped_offense_type_ui("ped_offense_type_reactable"),                  br(), br(), br(),
+                                        # ped_offense_type_pie_ui("ped_offense_type_pie"),                    br(), br(), br()
 
                                     ) # end div
 

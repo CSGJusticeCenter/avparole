@@ -24,6 +24,17 @@ red      <- "#c60040"
 yellow   <- "#ffaf00"
 orange   <- "#ff6400"
 
+
+
+
+
+
+
+
+
+
+
+
 # # contrasting palette 2
 # darkgreen    <- "#3FA200"
 # green        <- "#6BCE00"
