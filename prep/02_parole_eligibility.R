@@ -128,9 +128,9 @@ theseFOLDERS <- c( "sharepoint" = paste0(sp_data_path, "/data/analysis"), "app" 
 
 for (folder in theseFOLDERS){
 
-  save(parole_eligibility_table_2020,           file=file.path(folder, "parole_eligibility_table_2020.Rda"))
-  save(parole_eligibility_table_2020_reactable, file=file.path(folder, "parole_eligibility_table_2020_reactable.Rda"))
-  save(current_ped_2020_offenses,               file=file.path(folder, "current_ped_2020_offenses.Rda"))
-  save(current_ped_2020_race,                   file=file.path(folder, "current_ped_2020_race.Rda"))
+  save(parole_eligibility_table_2020,           file=file.path(folder, "parole_eligibility_table_2020.rds"))
+  save(parole_eligibility_table_2020_reactable, file=file.path(folder, "parole_eligibility_table_2020_reactable.rds"))
+  save(current_ped_2020_offenses,               file=file.path(folder, "current_ped_2020_offenses.rds"))
+  save(current_ped_2020_race,                   file=file.path(folder, "current_ped_2020_race.rds"))
 
 }

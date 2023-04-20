@@ -2,13 +2,18 @@
 Screen Settings
 ########################################*/
 
+/* Hide navigation bar menu items */
+#navbarID{
+  display:none;
+}
+
+/* Make body smaller width than header which spans the entire page */
+/* Center everything */
 #app-body {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
 }
-
-
 
 /*######################################
 Font size and style
@@ -25,14 +30,6 @@ Font size and style
     font-weight: bold;
 }
 
-/* Change font family throughout - DO NOT USE WITH PICKERINPUT
-  when set the entire font to 'Graphik' the emojis used
-  in the download data button and pickerinput selection (checkmarks)
-  will not render because they aren't in the correct font
-  {font-family: "Graphik" !important;}*/
-*{font-family: "Graphik";}
-
-
 /*##################################################################################################################
 Navigation Bar
 ####################################################################################################################*/
@@ -42,7 +39,6 @@ Navigation Bar
   display:none !important;
 }
 
-
 /*##################################################################################################################
 Header and global drop down options
 ####################################################################################################################*/
@@ -50,45 +46,36 @@ Header and global drop down options
 /* Remove rounded edges from drop downs and make blue */
 .selectize-input, .selectize-input.dropdown-active, .selectize-dropdown, .selectize-dropdown-content .active {
   border-radius:0px;
-  color: #3E4B4B;
+  color: #003474;
 }
+
+/* picker input styling */
 
 /* color drop-down menu items (specifically, non-selected items) */
 .dropdown-menu ul li a {
-  color: #3E4B4B !important;
+  color: #003474 !important;
   font-family: Graphik;
 }
 
 /* color of selected item in drop down */
 .dropdown-menu>.active>a, .dropdown-menu>.active>a:focus {
-  color: #3E4B4B !important;
+  color: #003474 !important;
   background-color: #fff;
 }
 
 /* color background of selected item when hover over it */
 .dropdown-menu>.active>a:hover {
-  background-color: ##F4F6F6;
+  background-color: #f5f5f5;
 }
 
 /* Top of page is a small grid of controls and info*/
 /* Can change background of header here background-color:#DEF0F6; */
 #header {
-  /*margin: 1rem auto; making everything shift to the left*/
-  /*width: 768px;
-  display: -ms-flexbox;
-  display: flex; vertically aligns to the left */
-  background-color:#DADFDF !important;
-  /*height: 100px;*/
+  background-color:#f5f5f5 !important;
   min-height: 7.0em;
-  /*padding: 0 0px;*/
   display: absolute; /* without this the blue part of the header disappears */
   left: 50%;
 }
-
-/* Issues with splitlayout
-/* without this, dropdown menus are cut off while using splitLayout - Don't need if not using split layout
-overflow:hidden; gets rid of scroll but not overlap
-/*display: inline-block; gets rid of overlap but not scroll*/
 
 .shiny-split-layout > div {
   overflow:visible;
@@ -102,23 +89,18 @@ button > div {
   white-space: visible;
 }
 
-/* Makes the label for header inputs sit left on top */
+/* Makes the label for header inputs sit centered on top */
 #header > * > span {
-  text-align: left;
+  text-align: center;
 }
 
 /* Format state header, same as map explorer header and download data header */
 #app-header {
-  background-color:#DADFDF !important;
-  /*height: 100px;*/
+  background-color:#DDE3E9 !important;
   min-height: 7.0em;
-  /*padding: 0 0px;*/
   margin-left: auto;
   margin-right: auto;
 }
-
-
-
 
 /*##################################################################################################################
 Dropdowns and buttons
@@ -130,24 +112,15 @@ Dropdowns and buttons
   max-width: 20em;
   margin-top: 1em;
   text-align: left;
-  color: #3E4B4B;
+  color: #003474;
   font-family: Graphik;
 }
 
 .input-col {
   min-width: 12em;
-  margin-top: 1em;
-  padding-left: 5px;
+  padding-left: 0px;
   padding-right: 0px;
-  text-align: left;
-  color: #3E4B4B;
-  font-family: Graphik;
 }
-
-
-
-
-
 
 /*######################################
 Title and value boxes
@@ -155,17 +128,24 @@ Title and value boxes
 
 /* Title of state settings */
 #selected-state {
-  text-align: left;
-  font-size: 38px;
+  text-align: center;
+  font-size: 40px;
   font-family: Graphik;
   font-weight: bold;
 }
 
+/* Title of tab settings */
+#section-header {
+  text-align: center;
+  font-size: 28px;
+  font-family: Graphik;
+  font-weight: bold;
+}
 
 /* Title of visualization settings */
 #viz-header {
-  text-align: left;
-  font-size: 28px;
+  text-align: center;
+  font-size: 22px;
   font-family: Graphik;
   font-weight: bold;
 }
@@ -177,3 +157,76 @@ Title and value boxes
   font-family: Graphik;
   /*font-weight: bold;*/
 }
+
+/*######################################
+Tabset Panels
+########################################*/
+
+/* Tab formatting */
+.nav {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  margin: 0;
+  width: 100%
+  display: inline;
+  padding: 1px 0; /* raise tabs slightly above line */
+}
+
+.nav-tabs > li {
+  float:none;
+  display:inline-block; /* maintains horizontal tab structure for parole, prob and revocations */
+  zoom:1;
+  /*width: 200px;*/
+  padding: 0px 14px; /* changes spacing between tabpanels */
+  font-family: Graphik;
+}
+
+.nav-tabs {
+  text-align:center;
+  border-bottom: #cccccc !important;
+  border-bottom-style: solid !important;
+  border-bottom-width: 1px !important;
+  font-size: 14px;
+  font-family: Graphik;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+  color: #FFFFFF;
+  cursor: default;
+  background-color: #003474;
+  border-bottom-color: #cccccc;
+  font-family: Graphik;
+}
+
+.nav-tabs>li>a {
+  margin-right: 2px;
+  line-height: 1.42857143; /* height of tab panel buttons */
+  border-radius: 0px 0px 0 0;
+  background-color: #F4F6F8;
+  color: #003474;
+  font-family: Graphik;
+}
+
+
+
+/*##################################################################################################################
+Dropdowns
+####################################################################################################################*/
+
+/*.dropdown-menu span {text-align: left; width: 100%;}*/
+
+/* Format for selector input*/
+
+.picker-style, .picker-style:hover, .picker-style:active, .picker-style:focus {
+  color: #003474;
+  border-radius:0px;
+  font-family: Graphik;
+  background-color:#FFFFFF;
+}
+
+.picker-style {
+  width: 90%;
+  max-width: 20em;
+}
+

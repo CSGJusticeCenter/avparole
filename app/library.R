@@ -7,6 +7,13 @@
 #    Load packages and custom functions
 #######################################
 
+# Highcharter download instructions:
+# remove the existing highcharter package from your R session: remove.packages("highcharter")
+# restart your R session
+# install highcharter with the devtools package (NOT the remotes package):
+# install.packages("devtools")
+# devtools::install_github("mrjoh3/highcharter")
+
 # load packages
 library(shiny)
 library(shinyWidgets)
@@ -15,26 +22,13 @@ library(shinydashboard)
 library(dplyr)
 library(ggplot2)
 library(scales)
+library(sysfonts)
+library(highcharter)
 
 ###################
 # Fonts
 ###################
 
-# Check the fonts path of your system
-font_paths() # "C:\\Windows\\Fonts"
-
-# # Add a custom font. You will need to run this code every time you restart R
-# # Make sure you download the Franklin Gothic Book font to your computer
-# font_add(family  = "Franklin Gothic Book",
-#          regular = "FRABK.ttf",
-#          italic  = "FRABKIT.ttf",
-#          bold    = "FRADM.ttf")
-# showtext_auto()
-# default_fonts <- c("Franklin Gothic Book")
-
 # Load fonts
 font_add("Graphik",     regular = "www/fonts/Graphik.ttf")
 font_add("GraphikBold", regular = "www/fonts/GraphikBold.ttf")
-extrafont::loadfonts(quiet = TRUE)
-loadfonts(device="win")
-showtext_auto()
