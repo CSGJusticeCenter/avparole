@@ -24,6 +24,8 @@ library(ggplot2)
 library(scales)
 library(sysfonts)
 library(highcharter)
+library(reactable)
+library(reactablefmtr)
 
 ###################
 # Fonts

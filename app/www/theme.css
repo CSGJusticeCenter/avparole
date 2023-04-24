@@ -2,11 +2,6 @@
 Screen Settings
 ########################################*/
 
-/* Hide navigation bar menu items */
-#navbarID{
-  display:none;
-}
-
 /* Make body smaller width than header which spans the entire page */
 /* Center everything */
 #app-body {
@@ -30,6 +25,12 @@ Font size and style
     font-weight: bold;
 }
 
+/* Change font family throughout - DO NOT USE WITH PICKERINPUT
+  when set the entire font to 'Graphik' the emojis used
+  in the download data button and pickerinput selection (checkmarks)
+  will not render because they aren't in the correct font /*
+/*{font-family: "Graphik", sans-serif !important;}
+
 /*##################################################################################################################
 Navigation Bar
 ####################################################################################################################*/
@@ -37,6 +38,11 @@ Navigation Bar
 /* Hide navigation bar */
 .navbar{
   display:none !important;
+}
+
+/* Hide navigation bar menu items */
+#navbarID{
+  display:none;
 }
 
 /*##################################################################################################################
