@@ -84,14 +84,25 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                                                        br(), br(),
 
                                                        # Pie charts
+                                                       fluidRow(column(width = 2),
+                                                                column(width = 3,
+                                                                       div(id = "pie-chart",
+                                                                           highchartOutput("pie_currently_eligible", height = 200))),
+                                                                column(width = 2),
+                                                                column(width = 3,
+                                                                       div(id = "pie-chart",
+                                                                           highchartOutput("pie_future_eligible", height = 200))),
+                                                                column(width = 2)),
+                                                       br(), br(),
+
 
                                                        # Reactable tables
                                                        fluidRow(column(width = 2),
-                                                                column(width = 3, align = "center",
+                                                                column(width = 3,
                                                                        div(id = "reactable-table",
                                                                            reactableOutput("table_parole_elgibility_current"))),
                                                                 column(width = 2),
-                                                                column(width = 3, align = "center",
+                                                                column(width = 3,
                                                                        div(id = "reactable-table",
                                                                            reactableOutput("table_parole_elgibility_future"))),
                                                                 column(width = 2)),
