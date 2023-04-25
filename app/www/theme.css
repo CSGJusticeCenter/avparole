@@ -148,6 +148,14 @@ Title and value boxes
   font-weight: bold;
 }
 
+/* Title of subsection settings */
+#subsection-header {
+  text-align: center;
+  font-size: 16px;
+  font-family: Graphik;
+  font-weight: bold;
+}
+
 /* Title of visualization settings */
 #viz-header {
   text-align: center;
@@ -241,7 +249,19 @@ Dropdowns
 Highcharts
 ####################################################################################################################*/
 
-#pie-chart {
+#pie-chart{
   /*height: 100px;*/
-  margin: 0 auto
+  /*margin: 0 auto*/
 }
+
+
+
+
+/*##################################################################################################################
+Tables
+####################################################################################################################*/
+
+#reactable-table{
+  text-align: center;
+}
+

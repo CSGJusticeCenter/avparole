@@ -27,8 +27,8 @@ parole_eligibility_counts_2020 <- parole_elgibility_2020 %>%
   group_by(state) %>%
   count(parelig_status) %>%
   mutate(
-    prop = n/sum(n)
-    , yearendpop = sum(n)
+    prop = n/sum(n),
+    yearendpop = sum(n)
   ) %>%
   ungroup()
 
@@ -36,8 +36,8 @@ parole_eligibility_counts_2020 <- parole_elgibility_2020 %>%
 parole_eligibility_table_2020 <- parole_eligibility_counts_2020 %>%
   pivot_longer(cols = c(n, prop), names_to = "type", values_to = "value") %>%
   mutate(name = case_when(
-    type == "n"    ~ paste(parelig_status, "count")
-    , type == "prop" ~ paste(parelig_status, "perc.")
+    type == "n"    ~ paste(parelig_status, "count"),
+    type == "prop" ~ paste(parelig_status, "perc.")
   )) %>%
   select(state, yearendpop, name, value) %>%
   pivot_wider(names_from = name, values_from = value) %>%

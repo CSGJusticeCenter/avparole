@@ -63,6 +63,28 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                            column(width = 1)),
                   br(),br(),
 
+                  # Pie charts
+                  fluidRow(column(width = 3),
+                           column(width = 2,
+                                  div(id = "subsection-header",
+                                      htmlOutput("parole_eligibility_title1"))),
+                           column(width = 2,
+                                  div(id = "subsection-header",
+                                      htmlOutput("parole_eligibility_title2"))),
+                           column(width = 5)),
+
+                  fluidRow(column(width = 3),
+                           column(width = 2,
+                                  div(id = "pie-chart",
+                                      highchartOutput("pie_currently_eligible",
+                                                      height = 150))),
+                           column(width = 2,
+                                  div(id = "pie-chart",
+                                      highchartOutput("pie_future_eligible",
+                                                      height = 150))),
+                           column(width = 5)),
+                  br(),
+
                   fluidRow(column(width = 1),
                            column(width = 10,
 
@@ -70,49 +92,25 @@ ui <- fluidPage(includeCSS("www/theme.css"),
 
                                               tabPanel(value="1","Parole Eligibility",
 
-                                                       ##############################
-                                                       # Parole Eligibility in 2020
-                                                       ##############################
-
-                                                       # Title
-                                                       br(),br(),
-                                                       fluidRow(column(width = 1),
-                                                                column(width = 10,
-                                                                       div(id = "section-header",
-                                                                           textOutput("parole_eligibility_title"))),
-                                                                column(width = 1)),
-                                                       br(), br(),
-
-                                                       # Pie charts
-                                                       fluidRow(column(width = 2),
-                                                                column(width = 3,
-                                                                       div(id = "pie-chart",
-                                                                           highchartOutput("pie_currently_eligible", height = 200))),
-                                                                column(width = 2),
-                                                                column(width = 3,
-                                                                       div(id = "pie-chart",
-                                                                           highchartOutput("pie_future_eligible", height = 200))),
-                                                                column(width = 2)),
-                                                       br(), br(),
-
-
-                                                       # Reactable tables
-                                                       fluidRow(column(width = 2),
-                                                                column(width = 3,
-                                                                       div(id = "reactable-table",
-                                                                           reactableOutput("table_parole_elgibility_current"))),
-                                                                column(width = 2),
-                                                                column(width = 3,
-                                                                       div(id = "reactable-table",
-                                                                           reactableOutput("table_parole_elgibility_future"))),
-                                                                column(width = 2)),
-                                                       br(), br(),
+                                                       # Redundant information
+                                                       # # Reactable tables
+                                                       # fluidRow(column(width = 2),
+                                                       #          column(width = 3,
+                                                       #                 div(id = "reactable-table",
+                                                       #                     reactableOutput("table_parole_elgibility_current"))),
+                                                       #          column(width = 2),
+                                                       #          column(width = 3,
+                                                       #                 div(id = "reactable-table",
+                                                       #                     reactableOutput("table_parole_elgibility_future"))),
+                                                       #          column(width = 2)),
+                                                       # br(), br(),
 
                                                        ##############################
                                                        # Parole Eligibility and Offense Type in 2020
                                                        ##############################
 
                                                        # Title
+                                                       br(), br(),
                                                        fluidRow(column(width = 1),
                                                                 column(width = 10,
                                                                        div(id = "section-header",

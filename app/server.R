@@ -15,9 +15,11 @@ server <- function(input, output, session) {
   # PAROLE ELIGIBILITY
   ######################
 
-  # Title of panel
-  output$parole_eligibility_title <-
-    renderText({"Parole Eligibility Trends in 2020"})
+  # Title of pie charts about parole eligibility
+  output$parole_eligibility_title1 <-
+    renderText({paste0("Currently Eligible", "<br>" , "for Parole")})
+  output$parole_eligibility_title2 <-
+    renderText({paste0("Eligible for Parole", "<br>", "in the Future")})
 
   # Get parole eligibility data
   df_parole_eligibility <-
@@ -66,18 +68,35 @@ server <- function(input, output, session) {
   # Pie chart showing Parole Eligibility in Currently
   output$pie_currently_eligible <- renderHighchart({
 
+    df1 <- df_parole_eligibility_current() %>%
+      filter(type == "current_perc") %>%
+      mutate(pctlabel = paste0(round(pct*100,0), "%"))
+
     highchart() %>%
 
+      hc_add_series(type = "pie",
+                    data = df1,
+                    hcaes(state, pct),
+                    size = "100%",
+                    name = "TBD",
+                    center = c(50, 50),
+                    innerSize="60%",
+                    dataLabels = list(
+                      style = list(fontSize = "2em",
+                                   color = neutralBlackText),
+                      enabled = TRUE,
+                      distance= -65,
+                      format = "{point.pctlabel}")
+      ) %>%
       hc_add_series(type = "pie",
                     data = df_parole_eligibility_current(),
                     hcaes(state, pct),
                     size = "100%",
                     name = "TBD",
                     center = c(50, 50),
-                    innerSize="50%",
-                    dataLabels = list(distance = -50,
-                                      formatter = JS("function () {
-                                                  return this.y > 5 ? this.point.name : null;}"))) %>%
+                    innerSize="60%",
+                    dataLabels = list(enabled = FALSE)
+      ) %>%
 
       hc_tooltip(formatter = JS("function(){return(this.point.tooltip)}")) %>%
 
@@ -100,17 +119,36 @@ server <- function(input, output, session) {
 
   # Pie chart showing Parole Eligibility in the Future
   output$pie_future_eligible <- renderHighchart({
+
+    df1 <- df_parole_eligibility_future() %>%
+      filter(type == "future_perc") %>%
+      mutate(pctlabel = paste0(round(pct*100,0), "%"))
+
     highchart() %>%
+
+      hc_add_series(type = "pie",
+                    data = df1,
+                    hcaes(state, pct),
+                    size = "100%",
+                    name = "TBD",
+                    center = c(50, 50),
+                    innerSize="60%",
+                    dataLabels = list(
+                      style = list(fontSize = "2em",
+                                   color = neutralBlackText),
+                      enabled = TRUE,
+                      distance= -65,
+                      format = "{point.pctlabel}")
+      ) %>%
       hc_add_series(type = "pie",
                     data = df_parole_eligibility_future(),
                     hcaes(state, pct),
                     size = "100%",
                     name = "TBD",
                     center = c(50, 50),
-                    innerSize="50%",
-                    dataLabels = list(distance = -50,
-                                      formatter = JS("function () {
-                                                  return this.y > 5 ? this.point.name : null;}"))) %>%
+                    innerSize="60%",
+                    dataLabels = list(enabled = FALSE)
+      ) %>%
 
       hc_tooltip(formatter = JS("function(){return(this.point.tooltip)}")) %>%
 
@@ -131,73 +169,73 @@ server <- function(input, output, session) {
                      area = list(accessibility = list(description = "TBD.")))
   })
 
-  # Parole Eligibility in Currently
-  output$table_parole_elgibility_current <- renderReactable({
-    df1 <- df_parole_eligibility() %>% select(-state)
-    reactable(df1,
-              style = list(fontFamily = "Graphik, sans-serif",
-                           fontSize = "1.5rem"),
-              theme = reactableTheme(cellStyle = list(display = "flex",
-                                                      flexDirection = "column",
-                                                      justifyContent = "center")),
-              defaultColDef = colDef(format = colFormat(separators = TRUE),
-                                     align = "center"),
-              compact = TRUE,
-              fullWidth = FALSE,
-              columns = list(
-                yearendpop    = colDef(show = F,
-                                       name = "Year End Population (2020)",
-                                       minWidth = 95,
-                                       style = list(position = "sticky",
-                                                    borderRight = "1px solid #d3d3d3")),
-                current_count = colDef(name = "Currently Eligible for Parole (N)",
-                                       minWidth = 150),
-                current_perc  = colDef(name = "Currently Eligible for Parole (%)",
-                                       minWidth = 150,
-                                       format = colFormat(percent = TRUE, digits = 1)),
-                future_count  = colDef(show = F,
-                                       name = "Eligible for Parole in the Future (N)",
-                                       minWidth = 150),
-                future_perc   = colDef(show = F,
-                                       name = "Eligible for Parole in the Future (%)",
-                                       minWidth = 150,
-                                       format = colFormat(percent = TRUE, digits = 1))
-              ))
-  })
+  # # Parole Eligibility in Currently
+  # output$table_parole_elgibility_current <- renderReactable({
+  #   df1 <- df_parole_eligibility() %>% select(-state)
+  #   reactable(df1,
+  #             style = list(fontFamily = "Graphik, sans-serif",
+  #                          fontSize = "1.5rem"),
+  #             theme = reactableTheme(cellStyle = list(display = "flex",
+  #                                                     flexDirection = "column",
+  #                                                     justifyContent = "center")),
+  #             defaultColDef = colDef(format = colFormat(separators = TRUE),
+  #                                    align = "center"),
+  #             compact = TRUE,
+  #             fullWidth = FALSE,
+  #             columns = list(
+  #               yearendpop    = colDef(show = F,
+  #                                      name = "Year End Population (2020)",
+  #                                      minWidth = 95,
+  #                                      style = list(position = "sticky",
+  #                                                   borderRight = "1px solid #d3d3d3")),
+  #               current_count = colDef(name = "Currently Eligible for Parole (N)",
+  #                                      minWidth = 150),
+  #               current_perc  = colDef(name = "Currently Eligible for Parole (%)",
+  #                                      minWidth = 150,
+  #                                      format = colFormat(percent = TRUE, digits = 1)),
+  #               future_count  = colDef(show = F,
+  #                                      name = "Eligible for Parole in the Future (N)",
+  #                                      minWidth = 150),
+  #               future_perc   = colDef(show = F,
+  #                                      name = "Eligible for Parole in the Future (%)",
+  #                                      minWidth = 150,
+  #                                      format = colFormat(percent = TRUE, digits = 1))
+  #             ))
+  # })
 
-  # Parole Eligibility in the Future
-  output$table_parole_elgibility_future <- renderReactable({
-    df1 <- df_parole_eligibility() %>% select(-state)
-    reactable(df1,
-              style = list(fontFamily = "Graphik, sans-serif",
-                           fontSize = "1.5rem"),
-              theme = reactableTheme(cellStyle = list(display = "flex",
-                                                      flexDirection = "column",
-                                                      justifyContent = "center")),
-              defaultColDef = colDef(format = colFormat(separators = TRUE),
-                                     align = "center"),
-              compact = TRUE,
-              fullWidth = FALSE,
-              columns = list(
-                yearendpop    = colDef(show = F,
-                                       name = "Year End Population (2020)",
-                                       minWidth = 95,
-                                       style = list(position = "sticky",
-                                                    borderRight = "1px solid #d3d3d3")),
-                current_count = colDef(show = F,
-                                       name = "Currently Eligible for Parole (N)",
-                                       minWidth = 150),
-                current_perc  = colDef(show = F,
-                                       name = "Currently Eligible for Parole (%)",
-                                       minWidth = 150,
-                                       format = colFormat(percent = TRUE, digits = 1)),
-                future_count  = colDef(name = "Eligible for Parole in the Future (N)",
-                                       minWidth = 150),
-                future_perc   = colDef(name = "Eligible for Parole in the Future (%)",
-                                       minWidth = 150,
-                                       format = colFormat(percent = TRUE, digits = 1))
-              ))
-  })
+  # # Parole Eligibility in the Future
+  # output$table_parole_elgibility_future <- renderReactable({
+  #   df1 <- df_parole_eligibility() %>% select(-state)
+  #   reactable(df1,
+  #             style = list(fontFamily = "Graphik, sans-serif",
+  #                          fontSize = "1.5rem"),
+  #             theme = reactableTheme(cellStyle = list(display = "flex",
+  #                                                     flexDirection = "column",
+  #                                                     justifyContent = "center")),
+  #             defaultColDef = colDef(format = colFormat(separators = TRUE),
+  #                                    align = "center"),
+  #             compact = TRUE,
+  #             fullWidth = FALSE,
+  #             columns = list(
+  #               yearendpop    = colDef(show = F,
+  #                                      name = "Year End Population (2020)",
+  #                                      minWidth = 95,
+  #                                      style = list(position = "sticky",
+  #                                                   borderRight = "1px solid #d3d3d3")),
+  #               current_count = colDef(show = F,
+  #                                      name = "Currently Eligible for Parole (N)",
+  #                                      minWidth = 150),
+  #               current_perc  = colDef(show = F,
+  #                                      name = "Currently Eligible for Parole (%)",
+  #                                      minWidth = 150,
+  #                                      format = colFormat(percent = TRUE, digits = 1)),
+  #               future_count  = colDef(name = "Eligible for Parole in the Future (N)",
+  #                                      minWidth = 150),
+  #               future_perc   = colDef(name = "Eligible for Parole in the Future (%)",
+  #                                      minWidth = 150,
+  #                                      format = colFormat(percent = TRUE, digits = 1))
+  #             ))
+  # })
 
   # Parole Eligibility and Offense Type
   output$parole_eligibility_offense_title <-
@@ -209,10 +247,19 @@ server <- function(input, output, session) {
 
   # Pie chart showing the proportion of people eligible for release but not yet due to each offense type
   output$pie_parole_elgibility_offense <- renderHighchart({
+
     df_ped_offense_type() %>%
+
       hchart("pie",
-             hcaes(x = offgeneral, y = prop)) %>%
+             hcaes(x = offgeneral, y = prop),
+             dataLabels = list(
+               style = list(fontSize = "1.25em",
+                            color = neutralBlackText),
+               enabled = TRUE,
+               format = "{point.offgeneral}")) %>%
+
       hc_add_theme(hc_theme_jc) %>%
+
       hc_tooltip(formatter = JS("function(){return(this.point.tooltip)}")) %>%
 
       hc_plotOptions(series = list(animation = FALSE,
