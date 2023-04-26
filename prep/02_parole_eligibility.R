@@ -2,7 +2,7 @@
 # Project: AV Parole
 # File: parole_eligibility.R
 # Authors: Mari Roberts
-# Date last updated: April 25, 2023 (MAR)
+# Date last updated: April 26, 2023 (MAR)
 # Description:
 #    Parole eligibility tables and graphics for shiny app
 #######################################
@@ -15,12 +15,7 @@
 parole_elgibility_2020 <- yearendpop %>%
   filter(rptyear == 2020) %>%
   # create parole eligibility status with custom function
-  fnc_create_parelig_status() %>%
-  mutate(
-    state = str_sub(state, 6, -1),
-    offgeneral = str_sub(offgeneral, 5, -1),
-    race = str_sub(race, 5, -1)
-  )
+  fnc_create_parelig_status()
 
 # get number and percentage of eligibility statuses
 parole_eligibility_counts_2020 <- parole_elgibility_2020 %>%
@@ -44,8 +39,10 @@ parole_eligibility_table_2020 <- parole_eligibility_counts_2020 %>%
   clean_names() %>%
   select(-c(missing_count, missing_perc))
 
+# missing data
+# Arizona, Michigan, New Jersey, New Mexico
 parole_eligibility_missing_states_2020 <-
-  paste(state.name[!state.name %in% parole_eligibility_table_2020$state], collapse = ", ") # Arizona, Michigan, New Jersey, New Mexico
+  paste(state.name[!state.name %in% parole_eligibility_table_2020$state], collapse = ", ")
 
 
 
@@ -73,6 +70,13 @@ current_ped_2020_offenses <- parole_elgibility_2020 %>%
                   "Percentage of Prison Population with Parole<br>Eligibility but not yet Released: <br><b>",
                   paste(round(prop*100, 1), "%</b></b>", sep = ""), "<br>"))
 
+pop_2020_race <- parole_elgibility_2020 %>%
+  filter(parelig_status != "Missing") %>%
+  filter(!is.na(race)) %>%
+  group_by(state, race) %>%
+  count(race) %>%
+  select(state, race, total_prison_pop_by_race = n)
+
 current_ped_2020_race <- parole_elgibility_2020 %>%
   filter(parelig_status == "Current") %>%
   filter(!is.na(race)) %>%
@@ -80,11 +84,25 @@ current_ped_2020_race <- parole_elgibility_2020 %>%
   count(race) %>%
   mutate(
     prop = n/sum(n),
-    yearendpop_ped = sum(n)
+    yearendpop_ped = sum(n),
+    prop_label = paste0(round(prop*100, 0), "%")
   ) %>%
   ungroup() %>%
-  mutate(tooltip = paste0("<b>", state, " - ", race, "</b><br>", paste(round(prop*100, 1), "%", sep = ""), "<br>"))
+  mutate(tooltip = paste0("<b>", state, " - ",
+                          race, "</b><br>",
+                          prop_label, "<br>"))
 
+current_ped_2020_race1 <- parole_elgibility_2020 %>%
+  filter(parelig_status == "Current") %>%
+  filter(!is.na(race)) %>%
+  group_by(state, race) %>%
+  count(race) %>%
+  rename(currently_eligible_for_parole = n) %>%
+  left_join(pop_2020_race, by = c("state", "race")) %>%
+  mutate(
+    prop = currently_eligible_for_parole/total_prison_pop_by_race,
+    prop_label = paste0(round(prop*100, 0), "%")
+  )
 
 
 ##########
