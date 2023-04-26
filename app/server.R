@@ -2,7 +2,7 @@
 # Project: AV Parole
 # File: server.R
 # Authors: Mari Roberts
-# Date last updated: March 13, 2023 (MAR)
+# Date last updated: April 25, 2023 (MAR)
 # Description:
 #    Server for shiny app
 #######################################
@@ -16,10 +16,12 @@ server <- function(input, output, session) {
   ######################
 
   # Title of pie charts about parole eligibility
-  output$parole_eligibility_title1 <-
+  output$top_pie_title1 <-
     renderText({paste0("Currently Eligible", "<br>" , "for Parole")})
-  output$parole_eligibility_title2 <-
+  output$top_pie_title2 <-
     renderText({paste0("Eligible for Parole", "<br>", "in the Future")})
+  output$top_pie_title3 <-
+    renderText({paste0("Another", "<br>", "Finding TBD")})
 
   # Get parole eligibility data
   df_parole_eligibility <-
@@ -37,11 +39,11 @@ server <- function(input, output, session) {
     mutate(tooltip =
              case_when(type == "current_perc" ~
                          paste0("<b>", state, "</b><br>",
-                                "Proportion of People Eligible for Release:<br>",
+                                "Percentage of People Eligible for Release:<br>",
                                 paste(round(pct*100, 0), "%</b>", sep = ""), "<br>"),
                        type == "rest" ~
                          paste0("<b>", state, "</b><br>",
-                                "Proportion of People Not Eligible for Release:<br>",
+                                "Percentage of People Not Eligible for Release:<br>",
                                 paste(round(pct*100, 0), "%</b>", sep = ""), "<br>")))
   })
 
@@ -57,11 +59,11 @@ server <- function(input, output, session) {
       mutate(tooltip =
                case_when(type == "future_perc" ~
                            paste0("<b>", state, "</b><br>",
-                                  "Proportion of People Eligible for Release in the Future:<br>",
+                                  "Percentage of People Eligible for Release in the Future:<br>",
                                   paste(round(pct*100, 0), "%</b>", sep = ""), "<br>"),
                          type == "rest" ~
                            paste0("<b>", state, "</b><br>",
-                                  "Proportion of People Not Eligible for Release in the Future:<br>",
+                                  "Percentage of People Not Eligible for Release in the Future:<br>",
                                   paste(round(pct*100, 0), "%</b>", sep = ""), "<br>")))
   })
 
@@ -239,13 +241,13 @@ server <- function(input, output, session) {
 
   # Parole Eligibility and Offense Type
   output$parole_eligibility_offense_title <-
-    renderText({"Parole Eligibility and Offense Type in 2020"})
+    renderText({"Most Serious Sentenced Offense for People Eligible for Parole but not yet Released"})
 
   # Sentence explaining number of people eligible for release but not yet due to which offense type
   # "Of the X people eligible for release before 2020 but not yet released, the most serious offense was violent."
   df_ped_offense_type <- reactive({filter(current_ped_2020_offenses, state == input$state)})
 
-  # Pie chart showing the proportion of people eligible for release but not yet due to each offense type
+  # Pie chart showing the percentage of people eligible for release but not yet due to each offense type
   output$pie_parole_elgibility_offense <- renderHighchart({
 
     df_ped_offense_type() %>%
@@ -283,22 +285,25 @@ server <- function(input, output, session) {
                                                       flexDirection = "column",
                                                       justifyContent = "center")),
               defaultColDef = colDef(format = colFormat(separators = TRUE),
-                                     align = "center"),
+                                     align = "left"),
               compact = TRUE,
               fullWidth = FALSE,
               columns = list(
-                offgeneral    = colDef(name = "Offense Type",
-                                       minWidth = 200,
+                offgeneral    = colDef(name = "Most Serious Sentenced Offense",
+                                       minWidth = 150,
                                        style = list(position = "sticky",
                                                     borderRight = "1px solid #d3d3d3")),
-                n = colDef(name = "Number of People Arrested (N)",
+                n = colDef(name = "Number of People",
                            minWidth = 95),
-                prop   = colDef(name = "Proportion of People Arrested (%)",
-                                minWidth = 95,
+                prop   = colDef(name = "Percentage of Prison Population",
+                                minWidth = 100,
                                 format = colFormat(percent = TRUE, digits = 1))
               ))
   })
 
+  # Parole Eligibility Over Time
+  output$parole_eligibility_time_title <-
+    renderText({"Changes in Parole Eligibility Over Time (Select Years)"})
 
 
 

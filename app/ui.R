@@ -2,7 +2,7 @@
 # Project: AV Parole
 # File: ui.R
 # Authors: Mari Roberts
-# Date last updated: March 13, 2023 (MAR)
+# Date last updated: April 25, 2023 (MAR)
 # Description:
 #    User interface for shiny app
 #######################################
@@ -67,11 +67,14 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                   fluidRow(column(width = 3),
                            column(width = 2,
                                   div(id = "subsection-header",
-                                      htmlOutput("parole_eligibility_title1"))),
+                                      htmlOutput("top_pie_title1"))),
                            column(width = 2,
                                   div(id = "subsection-header",
-                                      htmlOutput("parole_eligibility_title2"))),
-                           column(width = 5)),
+                                      htmlOutput("top_pie_title2"))),
+                           column(width = 2,
+                                  div(id = "subsection-header",
+                                      htmlOutput("top_pie_title3"))),
+                           column(width = 3)),
 
                   fluidRow(column(width = 3),
                            column(width = 2,
@@ -111,24 +114,38 @@ ui <- fluidPage(includeCSS("www/theme.css"),
 
                                                        # Title
                                                        br(), br(),
-                                                       fluidRow(column(width = 1),
-                                                                column(width = 10,
+                                                       fluidRow(#column(width = 1),
+                                                                column(width = 5,
                                                                        div(id = "section-header",
-                                                                           textOutput("parole_eligibility_offense_title"))),
-                                                                column(width = 1)),
-                                                       br(), br(),
+                                                                           htmlOutput("parole_eligibility_offense_title"))),
+                                                                column(width = 2),
+                                                                column(width = 5,
+                                                                       div(id = "section-header",
+                                                                           htmlOutput("parole_eligibility_time_title"))),
+                                                                #column(width = 1)
+                                                                ),
+                                                       br(),
 
-                                                       # Reactable table and pie chart
-                                                       fluidRow(column(width = 1),
-                                                                column(width = 4,
-                                                                       br(), br(),
-                                                                       div(id = "reactable-table",
-                                                                           reactableOutput("table_parole_elgibility_offense"))),
-                                                                column(width = 1),
+                                                       # Pie chart
+                                                       fluidRow(#column(width = 1),
                                                                 column(width = 5,
                                                                        div(id = "pie-chart",
-                                                                           highchartOutput("pie_parole_elgibility_offense", height = 300))),
-                                                                column(width = 1)),
+                                                                           highchartOutput("pie_parole_elgibility_offense", height = 250))),
+                                                                column(width = 2),
+                                                                column(width = 5),
+                                                                #column(width = 1)
+                                                                ),
+                                                       br(),
+
+                                                       # Reactable table
+                                                       fluidRow(#column(width = 1),
+                                                                column(width = 5,
+                                                                       div(id = "reactable-table",
+                                                                           reactableOutput("table_parole_elgibility_offense"))),
+                                                                column(width = 2),
+                                                                column(width = 5),
+                                                                #column(width = 1)
+                                                                ),
                                                        br(), br(),
 
 

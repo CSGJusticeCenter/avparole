@@ -2,7 +2,7 @@
 # Project: AV Parole
 # File: library.R
 # Authors: Mari Roberts
-# Date last updated: March 13, 2023 (MAR)
+# Date last updated: April 25, 2023 (MAR)
 # Description:
 #    Load packages and custom functions
 #######################################
@@ -26,6 +26,7 @@ library(sysfonts)
 library(highcharter)
 library(reactable)
 library(reactablefmtr)
+library(tidyr)
 
 ###################
 # Fonts

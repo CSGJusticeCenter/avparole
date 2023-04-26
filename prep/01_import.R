@@ -14,8 +14,19 @@ load(paste0(sp_data_path, "/data/raw/ICPSR_38492-V1/ICPSR_38492/DS0002/38492-000
 load(paste0(sp_data_path, "/data/raw/ICPSR_38492-V1/ICPSR_38492/DS0003/38492-0003-Data.rda"))
 load(paste0(sp_data_path, "/data/raw/ICPSR_38492-V1/ICPSR_38492/DS0004/38492-0004-Data.rda"))
 
+# Load "Prisoners in 2020 - Statistical Tables"
+prison_pop_by_race_state <- read.csv(paste0(sp_data_path, "/data/raw/p20st/p20stat02.csv"), skip = 10)
+
 # rename df names and clean variable names
 term_records <- da38492.0001 %>% clean_names()
 admissions   <- da38492.0002 %>% clean_names()
 population   <- da38492.0003 %>% clean_names()
 yearendpop   <- da38492.0004 %>% clean_names()
+
+# clean up file to create dataframe of state prison pop by race
+prison_pop_by_race_state <- prison_pop_by_race_state %>%
+  clean_names() %>%
+  filter(jurisdiction == "") %>%
+  select(-c(jurisdiction)) %>%
+  rename(state = x) %>%
+  mutate_all(~str_replace_all(.,",",""))

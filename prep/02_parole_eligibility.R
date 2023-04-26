@@ -2,7 +2,7 @@
 # Project: AV Parole
 # File: parole_eligibility.R
 # Authors: Mari Roberts
-# Date last updated: March 13, 2023 (MAR)
+# Date last updated: April 25, 2023 (MAR)
 # Description:
 #    Parole eligibility tables and graphics for shiny app
 #######################################
@@ -14,15 +14,15 @@
 # filter to 2020 data
 parole_elgibility_2020 <- yearendpop %>%
   filter(rptyear == 2020) %>%
+  # create parole eligibility status with custom function
   fnc_create_parelig_status() %>%
   mutate(
     state = str_sub(state, 6, -1),
     offgeneral = str_sub(offgeneral, 5, -1),
     race = str_sub(race, 5, -1)
-
   )
 
-# get number and proportion of eligibility statuses
+# get number and percentage of eligibility statuses
 parole_eligibility_counts_2020 <- parole_elgibility_2020 %>%
   group_by(state) %>%
   count(parelig_status) %>%
@@ -67,9 +67,11 @@ current_ped_2020_offenses <- parole_elgibility_2020 %>%
   ungroup() %>%
   mutate(tooltip =
            paste0("<b>", state, "</b><br><br>",
-                  "Most Serious Charge: <b>", offgeneral, "</b><br><br>",
-                  "Proportion of People with Parole<br>Eligibility but not yet Released: <b>",
-                  paste(round(prop*100, 1), "%</b>", sep = ""), "<br>"))
+                  "Most Serious Sentence Offense: <b>", offgeneral, "</b><br><br>",
+                  "Number of People with Parole<br>Eligibility but not yet Released: <br><b>",
+                  scales::comma(n), "</b><br><br>",
+                  "Percentage of Prison Population with Parole<br>Eligibility but not yet Released: <br><b>",
+                  paste(round(prop*100, 1), "%</b></b>", sep = ""), "<br>"))
 
 current_ped_2020_race <- parole_elgibility_2020 %>%
   filter(parelig_status == "Current") %>%
@@ -77,8 +79,8 @@ current_ped_2020_race <- parole_elgibility_2020 %>%
   group_by(state) %>%
   count(race) %>%
   mutate(
-    prop = n/sum(n)
-    , yearendpop_ped = sum(n)
+    prop = n/sum(n),
+    yearendpop_ped = sum(n)
   ) %>%
   ungroup() %>%
   mutate(tooltip = paste0("<b>", state, " - ", race, "</b><br>", paste(round(prop*100, 1), "%", sep = ""), "<br>"))

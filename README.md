@@ -14,7 +14,21 @@ The Robina Institute’s report on “degrees of indeterminacy” (Reitz et al.,
 
 # Data
 
-Data will be provided by NCRP. NCRP collects case-level administrative data annually on prison admissions and releases, year-end custody populations, and parole entries and discharges in participating jurisdictions. Demographic information, conviction offenses, sentence length, minimum time to be served, credited jail time, type of admission, type of release, and time served are collected from individual incarcerated people’s records. The collection began in 1983. In 1999, jurisdictions also began providing a stock file for all incarcerated people held at year’s end. In 2012, jurisdictions began reporting parole entry data. The number of states submitting data to NCRP has varied over the years, but at least 38 states have provided some data since 2000. The data are currently available through 2019, and 2020 data will become available in summer/fall of 2022.  
+Data will be provided by NCRP. NCRP collects case-level administrative data annually on prison admissions and releases, year-end custody populations, and parole entries and discharges in participating jurisdictions. Demographic information, conviction offenses, sentence length, minimum time to be served, credited jail time, type of admission, type of release, and time served are collected from individual incarcerated people’s records. 
+
+**Data Structure**
+The NCRP data is reported on an individual level. So that means that each row in the data set is an individual term (term records data) or an individual person (admissions, releases, and year-end population data). This makes the data sets very long (multi-millions of observations), but relatively narrow (14-18 variables). Person-level data allows for a lot of flexibility in creating aggregate counts on specific cross-sections.  
+
+The recent releases of the NCRP multi-year data series have 4 data sets:  
+
+- Term Records - each row contains one record for each separate term in prison  
+- Prison Admissions - each row contains one record for each admission to prison  
+- Prison Releases - each row contains one record for each release from prison   
+- Year-end Population - each row contains one record for each prisoner in custody on Dec 31 of each year  
+
+An individual person may have more than one record in each of the data sets.
+
+<br><br>
 
 # Final Products
 
