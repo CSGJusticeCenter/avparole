@@ -20,16 +20,36 @@ prison_pop_by_race_state <- read.csv(paste0(sp_data_path, "/data/raw/p20st/p20st
 # rename df names and clean variable names
 term_records <- da38492.0001 %>% clean_names()
 
-admissions   <- da38492.0002 %>% clean_names()
+admissions   <- da38492.0002 %>% clean_names() %>%
+  # create parole eligibility status with custom function
+  fnc_create_parelig_status()
 
-population   <- da38492.0003 %>% clean_names()
+population   <- da38492.0003 %>% clean_names() %>%
+  # create parole eligibility status with custom function
+  fnc_create_parelig_status() %>%
+  mutate(
+    state        = str_sub(state, 6, -1),
+    offgeneral   = str_sub(offgeneral, 5, -1),
+    offdetail    = str_sub(offdetail, 5, -1),
+
+    admtype      = str_sub(admtype, 5, -1),
+    race         = str_sub(race, 5, -1),
+    sex          = str_sub(sex, 5, -1),
+    ageadmit     = str_sub(ageadmit, 5, -1),
+    agerlse      = str_sub(agerlse, 5, -1),
+    sentlgth     = str_sub(sentlgth, 5, -1),
+    reltype      = str_sub(reltype, 5, -1),
+    timesrvd_rel = str_sub(timesrvd_rel, 5, -1)
+  )
 
 yearendpop   <- da38492.0004 %>% clean_names() %>%
   mutate(
     state = str_sub(state, 6, -1),
     offgeneral = str_sub(offgeneral, 5, -1),
     race = str_sub(race, 5, -1)
-  )
+  ) %>%
+  # create parole eligibility status with custom function
+  fnc_create_parelig_status()
 
 # clean up file to create dataframe of state prison pop by race
 prison_pop_by_race_state <- prison_pop_by_race_state %>%

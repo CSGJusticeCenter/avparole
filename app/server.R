@@ -307,6 +307,27 @@ server <- function(input, output, session) {
     renderText({"Changes in Parole Eligibility Over Time (Select Years)"})
 
 
+  ######################
+  # Releases
+  ######################
+
+  # Title of panel
+  output$releases_title <- renderText({"Releases from Prison"})
+
+
+
+
+
+  ######################
+  # Sentencing
+  ######################
+
+  # Title of panel
+  output$sentencing_title <- renderText({"Sentencing"})
+
+
+
+
 
   ######################
   # PAROLE BOARD

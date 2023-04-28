@@ -87,6 +87,10 @@ ui <- fluidPage(includeCSS("www/theme.css"),
 
                                                         tabsetPanel(selected = "1", type = "tabs", id = "tabsetpanel",
 
+                                                                    ##################
+                                                                    # Parole Eligibility
+                                                                    ##################
+
                                                                     tabPanel(value="1","Parole Eligibility",
 
                                                                              # Redundant information
@@ -101,10 +105,6 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                                                                              #                     reactableOutput("table_parole_elgibility_future"))),
                                                                              #          column(width = 2)),
                                                                              # br(), br(),
-
-                                                                             ##############################
-                                                                             # Parole Eligibility and Offense Type in 2020
-                                                                             ##############################
 
                                                                              # Title
                                                                              br(), br(),
@@ -147,14 +147,43 @@ ui <- fluidPage(includeCSS("www/theme.css"),
 
                                                                     ), # end tabPanel
 
+                                                                    ##################
+                                                                    # Releases from Prison
+                                                                    ##################
 
+                                                                    tabPanel(value="2","Releases from Prison",
 
+                                                                             br(),br(),
+                                                                             fluidRow(column(width = 1),
+                                                                                      column(width = 10,
+                                                                                             div(id = "section-header",
+                                                                                                 textOutput("releases_title"))),
+                                                                                      column(width = 1)),
+                                                                             br(), br()
 
+                                                                    ), # end tabPanel
 
+                                                                    ##################
+                                                                    # Sentencing
+                                                                    ##################
 
+                                                                    tabPanel(value="3","Sentencing",
 
+                                                                             br(),br(),
+                                                                             fluidRow(column(width = 1),
+                                                                                      column(width = 10,
+                                                                                             div(id = "section-header",
+                                                                                                 textOutput("sentencing_title"))),
+                                                                                      column(width = 1)),
+                                                                             br(), br()
 
-                                                                    tabPanel(value="2","Parole Board Decision-Making",
+                                                                    ), # end tabPanel
+
+                                                                    ##################
+                                                                    # Parole Board Decision-Making
+                                                                    ##################
+
+                                                                    tabPanel(value="4","Parole Board Decision-Making",
 
                                                                              br(),br(),
                                                                              fluidRow(column(width = 1),
@@ -162,19 +191,15 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                                                                                              div(id = "section-header",
                                                                                                  textOutput("parole_board_title"))),
                                                                                       column(width = 1)),
-                                                                             br(), br()
+                                                                             br(), br(),
 
                                                                     ), # end tabPanel
 
+                                                                    ##################
+                                                                    # Disparities
+                                                                    ##################
 
-
-
-
-
-
-
-
-                                                                    tabPanel(value="3","Disparities",
+                                                                    tabPanel(value="5","Disparities",
 
                                                                              br(),br(),
                                                                              fluidRow(column(width = 1),
@@ -185,6 +210,7 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                                                                              br(), br()
 
                                                                     ) # end tabPanel
+
                                                         ) # tabsetPanel
                                                  ),
                                                  column(width = 1))

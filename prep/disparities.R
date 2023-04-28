@@ -175,5 +175,4 @@ for (folder in theseFOLDERS){
 
   save(race_eth_rri_table, file=file.path(folder, "race_eth_rri_table.rds"))
 
-
 }

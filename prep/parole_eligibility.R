@@ -13,9 +13,7 @@
 
 # filter to 2020 data
 parole_elgibility_2020 <- yearendpop %>%
-  filter(rptyear == 2020) %>%
-  # create parole eligibility status with custom function
-  fnc_create_parelig_status()
+  filter(rptyear == 2020)
 
 # get number and percentage of eligibility statuses
 parole_eligibility_counts_2020 <- parole_elgibility_2020 %>%
