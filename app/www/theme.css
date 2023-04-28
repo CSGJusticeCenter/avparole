@@ -3,84 +3,178 @@ Screen Settings
 ########################################*/
 
 /* Make body smaller width than header which spans the entire page */
-/* Center everything */
-#app-body {
+  /* Center everything */
+  #app-body {
   max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+margin-left: auto;
+margin-right: auto;
 }
+
 
 /*######################################
 Font size and style
 ########################################*/
 
 /* Add fonts*/
-@font-face {
+  @font-face {
     font-family: "Graphik";
     src: local('Graphik'), url("fonts/Graphik.ttf");
-}
+  }
 @font-face {
-    font-family: "Graphik";
-    src: local('Graphik'), url("fonts/GraphikBold.ttf");
-    font-weight: bold;
+  font-family: "Graphik";
+  src: local('Graphik'), url("fonts/GraphikBold.ttf");
+  font-weight: bold;
 }
 
 /* Change font family throughout - DO NOT USE WITH PICKERINPUT
-  when set the entire font to 'Graphik' the emojis used
-  in the download data button and pickerinput selection (checkmarks)
-  will not render because they aren't in the correct font /*
+when set the entire font to 'Graphik' the emojis used
+in the download data button and pickerinput selection (checkmarks)
+will not render because they aren't in the correct font /*
 /*{font-family: "Graphik", sans-serif !important;}
 
 /*##################################################################################################################
 Navigation Bar
 ####################################################################################################################*/
 
-/* Hide navigation bar */
+/* Hide navigation bar
 .navbar{
   display:none !important;
-}
+}*/
 
-/* Hide navigation bar menu items */
+/* Hide navigation bar menu items
 #navbarID{
   display:none;
+}*/
+
+/* Parole dashboard title */
+.navbar-default .navbar-brand{
+  color: #FFFFFF !important;
+  font-weight: bold;
+  font-family: Graphik !important;
+  font-size: 1.5;
+}
+
+/* Nav bar settings */
+.navbar-default .navbar-nav > li > a {
+  font-weight: bold;
+  color: #FFFFFF;
+  background-color: #3E4B4B;
+}
+/* Color of overall navbar */
+.navbar{
+  background-color: #3E4B4B;
+  color: #FFFFFF !important;
+  font-family: Graphik !important;
+  font-size: 1.0em;
+}
+
+/* Settings when a nav bar item is selected */
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .open > a:hover {
+  color: #FFFFFF;
+  background-color: #00aba0;
+}
+
+
+/*##################################################################################################################
+Tabs within each nav bar
+####################################################################################################################*/
+
+.nav-tabs > li {
+  color: #3E4B4B;
+  float:none;
+  display:inline-block; /* maintains horizontal tab structure */
+  zoom:1;
+  /*width: 200px;*/
+  padding: 0px 14px; /* changes spacing between tabpanels */
+  font-family: Graphik;
+  border-bottom-color: #cccccc;
+}
+
+.nav-tabs {
+  color: #3E4B4B;
+  text-align:center;
+  border-bottom: #cccccc !important;
+  border-bottom-style: solid !important;
+  border-bottom-width: 1px !important;
+  font-size: 14px;
+  font-family: Graphik;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+  color: #FFFFFF;
+  cursor: default;
+  background-color: #3E4B4B;
+  border-bottom-color: #cccccc;
+  font-family: Graphik;
+}
+
+.nav-tabs>li>a {
+  margin-right: 2px;
+  line-height: 1.42857143; /* height of tab panel buttons */
+  border-radius: 0px 0px 0 0;
+  background-color: #F4F6F8;
+  color: #3E4B4B;
+  font-family: Graphik;
+  border-bottom-color: #cccccc;
+}
+
+.tab-panel{
+  background-color: #3E4B4B;
+  color: #3E4B4B
+  font-family: Graphik !important;
+  font-size: 18px;
+  border-bottom-color: #cccccc;
 }
 
 /*##################################################################################################################
-Header and global drop down options
+Drop down options
 ####################################################################################################################*/
 
 /* Remove rounded edges from drop downs and make blue */
 .selectize-input, .selectize-input.dropdown-active, .selectize-dropdown, .selectize-dropdown-content .active {
   border-radius:0px;
-  color: #003474;
+  /*color: #3E4B4B;*/
+  color: #3E4B4B
 }
 
-/* picker input styling */
+.input-col {
+  color: #3E4B4B;
+  min-width: 12em;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 10px;
+}
+
+/*
+.picker-style, .picker-style:hover, .picker-style:active, .picker-style:focus {
+  color: #3E4B4B;
+  border-radius:0px;
+  font-family: Graphik;
+  background-color:#FFFFFF;
+}
+
+.picker-style {
+  width: 90%;
+  max-width: 20em;
+}*/
+
 
 /* color drop-down menu items (specifically, non-selected items) */
 .dropdown-menu ul li a {
-  color: #003474 !important;
+  color: #3E4B4B !important;
   font-family: Graphik;
 }
 
 /* color of selected item in drop down */
 .dropdown-menu>.active>a, .dropdown-menu>.active>a:focus {
-  color: #003474 !important;
+  color: #3E4B4B !important;
   background-color: #fff;
 }
 
 /* color background of selected item when hover over it */
 .dropdown-menu>.active>a:hover {
   background-color: #f5f5f5;
-}
-
-/* Top of page is a small grid of controls and info*/
-/* Can change background of header here background-color:#DEF0F6; */
-#header {
-  background-color:#f5f5f5 !important;
-  min-height: 7.0em;
-  display: absolute; /* without this the blue part of the header disappears */
-  left: 50%;
+  color: #3E4B4B;
 }
 
 .shiny-split-layout > div {
@@ -95,53 +189,51 @@ button > div {
   white-space: visible;
 }
 
-/* Makes the label for header inputs sit centered on top */
-#header > * > span {
-  text-align: center;
-}
-
-/* Format state header, same as map explorer header and download data header */
-#app-header {
-  background-color:#DDE3E9 !important;
-  min-height: 7.0em;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/*##################################################################################################################
-Dropdowns and buttons
-####################################################################################################################*/
-
 /* Format for selector input */
 #input-btn {
   width: 90%;
   max-width: 20em;
   margin-top: 1em;
   text-align: left;
-  color: #003474;
+  color: #3E4B4B;
   font-family: Graphik;
 }
 
-.input-col {
-  min-width: 12em;
-  padding-left: 0px;
-  padding-right: 0px;
-}
+
+
+
+
 
 /*######################################
-Title and value boxes
+Titles
 ########################################*/
 
-/* Title of state settings */
+/* Select state at top of page */
 #selected-state {
   text-align: center;
-  font-size: 40px;
-  font-family: Graphik;
-  font-weight: bold;
+  font-size: 30px;
+  font-family: Graphik !important;
+  color: #3E4B4B;
 }
+
+.re-picker, .re-picker:hover, .re-picker:active, .re-picker:focus {
+  color: #3E4B4B;
+  border-bottom: 2px solid;
+  border-bottom-color: #ffaf00;
+  border-radius:0px;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: Graphik !important;
+  background-color: #fff;
+  padding: 0px 0.1em;
+}
+
+
+
 
 /* Title of tab settings */
 #section-header {
+  color: #3E4B4B;
   text-align: center;
   font-size: 20px;
   font-family: Graphik;
@@ -150,99 +242,17 @@ Title and value boxes
 
 /* Title of subsection settings */
 #subsection-header {
+  color: #3E4B4B;
   text-align: center;
   font-size: 16px;
   font-family: Graphik;
   font-weight: bold;
 }
 
-/* Title of visualization settings */
-#viz-header {
-  text-align: center;
-  font-size: 22px;
-  font-family: Graphik;
-  font-weight: bold;
-}
-
-/* Sentence description of visualization settings */
-#viz-sentence {
-  text-align: left;
-  font-size: 16px;
-  font-family: Graphik;
-  /*font-weight: bold;*/
-}
-
-/*######################################
-Tabset Panels
-########################################*/
-
-/* Tab formatting */
-.nav {
-  padding-left: 0;
-  margin-bottom: 0;
-  list-style: none;
-  margin: 0;
-  width: 100%
-  display: inline;
-  padding: 1px 0; /* raise tabs slightly above line */
-}
-
-.nav-tabs > li {
-  float:none;
-  display:inline-block; /* maintains horizontal tab structure for parole, prob and revocations */
-  zoom:1;
-  /*width: 200px;*/
-  padding: 0px 14px; /* changes spacing between tabpanels */
-  font-family: Graphik;
-}
-
-.nav-tabs {
-  text-align:center;
-  border-bottom: #cccccc !important;
-  border-bottom-style: solid !important;
-  border-bottom-width: 1px !important;
-  font-size: 14px;
-  font-family: Graphik;
-}
-
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
-  color: #FFFFFF;
-  cursor: default;
-  background-color: #003474;
-  border-bottom-color: #cccccc;
-  font-family: Graphik;
-}
-
-.nav-tabs>li>a {
-  margin-right: 2px;
-  line-height: 1.42857143; /* height of tab panel buttons */
-  border-radius: 0px 0px 0 0;
-  background-color: #F4F6F8;
-  color: #003474;
-  font-family: Graphik;
-}
 
 
 
-/*##################################################################################################################
-Dropdowns
-####################################################################################################################*/
 
-/*.dropdown-menu span {text-align: left; width: 100%;}*/
-
-/* Format for selector input*/
-
-.picker-style, .picker-style:hover, .picker-style:active, .picker-style:focus {
-  color: #003474;
-  border-radius:0px;
-  font-family: Graphik;
-  background-color:#FFFFFF;
-}
-
-.picker-style {
-  width: 90%;
-  max-width: 20em;
-}
 
 
 /*##################################################################################################################
@@ -250,6 +260,7 @@ Highcharts
 ####################################################################################################################*/
 
 #pie-chart{
+  color: #3E4B4B;
   /*height: 100px;*/
   /*margin: 0 auto*/
 }
@@ -262,6 +273,7 @@ Tables
 ####################################################################################################################*/
 
 #reactable-table{
+  color: #3E4B4B;
   text-align: center;
 }
 

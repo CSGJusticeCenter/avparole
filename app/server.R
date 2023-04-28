@@ -9,7 +9,8 @@
 
 server <- function(input, output, session) {
 
-  output$selected_state <- renderText({input$state})
+  # Using picker input for now
+  # output$selected_state <- renderText({input$state})
 
   ######################
   # PAROLE ELIGIBILITY
@@ -241,7 +242,7 @@ server <- function(input, output, session) {
 
   # Parole Eligibility and Offense Type
   output$parole_eligibility_offense_title <-
-    renderText({"Most Serious Sentenced Offense for People Eligible for Parole but not yet Released"})
+    renderText({"Most Serious Sentenced Offense for People Eligible for Parole but not yet Released in 2020"})
 
   # Sentence explaining number of people eligible for release but not yet due to which offense type
   # "Of the X people eligible for release before 2020 but not yet released, the most serious offense was violent."
@@ -295,7 +296,7 @@ server <- function(input, output, session) {
                                                     borderRight = "1px solid #d3d3d3")),
                 n = colDef(name = "Number of People",
                            minWidth = 95),
-                prop   = colDef(name = "Percentage of Prison Population",
+                prop   = colDef(name = "Percentage of People Eligible for Parole but not yet Released",
                                 minWidth = 100,
                                 format = colFormat(percent = TRUE, digits = 1))
               ))
