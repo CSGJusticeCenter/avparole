@@ -24,9 +24,8 @@ admissions   <- da38492.0002 %>% clean_names() %>%
   # create parole eligibility status with custom function
   fnc_create_parelig_status()
 
-population   <- da38492.0003 %>% clean_names() %>%
-  # create parole eligibility status with custom function
-  fnc_create_parelig_status() %>%
+releases   <- da38492.0003 %>% clean_names() %>%
+
   mutate(
     state        = str_sub(state, 6, -1),
     offgeneral   = str_sub(offgeneral, 5, -1),

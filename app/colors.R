@@ -8,7 +8,8 @@
 #######################################
 
 # neutral colors
-neutralBkgndLight    <- "#F4F6F6"
+# neutralBkgndLight    <- "#F4F6F6"
+neutralBkgndLight    <- "#e7e7e7"
 neutralBkgndMedium   <- "#DADFDF"
 neutralBkgndDisabled <- "#B2B9B9"
 neutralDarkSubText   <- "#637070"

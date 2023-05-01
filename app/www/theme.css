@@ -6,8 +6,8 @@ Screen Settings
   /* Center everything */
   #app-body {
   max-width: 1200px;
-margin-left: auto;
-margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
@@ -16,7 +16,7 @@ Font size and style
 ########################################*/
 
 /* Add fonts*/
-  @font-face {
+@font-face {
     font-family: "Graphik";
     src: local('Graphik'), url("fonts/Graphik.ttf");
   }
@@ -249,8 +249,13 @@ Titles
   font-weight: bold;
 }
 
-
-
+/* Body settings */
+#section-body {
+  color: #3E4B4B;
+  text-align: left;
+  font-size: 14px;
+  font-family: Graphik;
+}
 
 
 

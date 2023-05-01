@@ -1,5 +1,12 @@
 
 
+# Parole Overview
+load(file = "data/people_on_parole_race.rds")
+load(file = "data/people_on_parole_sex.rds")
+load(file = "data/people_on_parole_age.rds")
+load(file = "data/people_on_parole_age_median.rds")
+load(file = "data/people_on_parole_education_median.rds")
+
 # Parole Eligibility
 load(file = "data/parole_eligibility_table_2020.rds")
 load(file = "data/current_ped_2020_offenses.rds")

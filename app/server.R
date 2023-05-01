@@ -9,11 +9,160 @@
 
 server <- function(input, output, session) {
 
-  # Using picker input for now
-  # output$selected_state <- renderText({input$state})
+  ######################
+  # Parole Overview
+  ######################
+
+  # get information on people on parole by race depending on state selection
+  df_parole_profile_race <- reactive({filter(people_on_parole_race, state == input$state)})
+
+  # create reactable table using df_parole_profile_race()
+  output$table_parole_profile_race <- renderReactable({
+    reactable(df_parole_profile_race(),
+              style = list(fontFamily = "Graphik, sans-serif",
+                           fontSize = "1.5rem"),
+              theme = hc_reactable_theme,
+              defaultColDef = colDef(format = colFormat(separators = TRUE),
+                                     align = "left"),
+              compact = TRUE,
+              fullWidth = FALSE,
+              columns = list(
+                state          = colDef(show = F, name = "State"),
+                race           = colDef(show = T, name = "Race", minWidth = 215),
+                total_race     = colDef(show = F, name = "Total (Race)"),
+                total_releases = colDef(show = F, name = "Total (Releases)"),
+                prop           = colDef(show = T,
+                                        align = "right",
+                                        name = "",
+                                        minWidth = 215,
+                                        format = colFormat(percent = TRUE, digits = 1))
+              ))
+  })
+
+  # get information on people on parole by sex depending on state selection
+  df_parole_profile_sex <- reactive({filter(people_on_parole_sex, state == input$state)})
+
+  # create reactable table using df_parole_profile_sex()
+  output$table_parole_profile_sex <- renderReactable({
+    reactable(df_parole_profile_sex(),
+              style = list(fontFamily = "Graphik, sans-serif",
+                           fontSize = "1.5rem"),
+              theme = hc_reactable_theme,
+
+              defaultColDef = colDef(format = colFormat(separators = TRUE),
+                                     align = "left"),
+              compact = TRUE,
+              fullWidth = FALSE,
+              columns = list(
+                state          = colDef(show = F, name = "State"),
+                sex            = colDef(show = T, name = "Gender", minWidth = 215),
+                total_sex      = colDef(show = F, name = "Total (Gender)"),
+                total_releases = colDef(show = F, name = "Total (Releases)"),
+                prop           = colDef(show = T,
+                                        align = "right",
+                                        name = "",
+                                        minWidth = 215,
+                                        format = colFormat(percent = TRUE, digits = 1))
+              ))
+  })
+
+  # get information on people on parole by age depending on state selection
+  df_parole_profile_age <- reactive({filter(people_on_parole_age, state == input$state)})
+
+  # create reactable table using df_parole_profile_age()
+  output$table_parole_profile_age <- renderReactable({
+    reactable(df_parole_profile_age(),
+              style = list(fontFamily = "Graphik, sans-serif",
+                           fontSize = "1.5rem"),
+              theme = hc_reactable_theme,
+
+              defaultColDef = colDef(format = colFormat(separators = TRUE),
+                                     align = "left"),
+              compact = TRUE,
+              fullWidth = FALSE,
+              columns = list(
+                state          = colDef(show = F, name = "State"),
+                agerlse        = colDef(show = T, name = "Age", minWidth = 215),
+                total_agerlse  = colDef(show = F, name = "Total (Age)"),
+                total_releases = colDef(show = F, name = "Total (Releases)"),
+                prop           = colDef(show = T,
+                                        name = "",
+                                        align = "right",
+                                        minWidth = 215,
+                                        format = colFormat(percent = TRUE, digits = 1))
+              ))
+  })
+
+  # get information on people on parole by age median depending on state selection
+  df_parole_profile_age_median <- reactive({filter(people_on_parole_age_median, state == input$state)})
+
+  # create reactable table using df_parole_profile_age()
+  output$table_parole_profile_age_median <- renderReactable({
+    reactable(df_parole_profile_age_median(),
+              style = list(fontFamily = "Graphik, sans-serif",
+                           fontSize = "1.5rem"),
+              theme = reactableTheme(
+                borderColor = neutralBkgndLight,
+                stripedColor = neutralBkgndLight,
+
+                cellStyle = list(display = "flex",
+                                 flexDirection = "column",
+                                 justifyContent = "center"),
+                headerStyle = list(borderColor = "#FFFFFF")),
+              defaultColDef = colDef(format = colFormat(separators = TRUE),
+                                     align = "left"),
+              rowStyle = function(index) {
+                if (index %in% c(1)) {
+                  list(`border-bottom` = "thin solid",
+                       `border-color` = neutralBkgndLight)
+                }
+              },
+              compact = TRUE,
+              sortable = FALSE,
+              fullWidth = FALSE,
+              columns = list(
+                state           = colDef(show = F, name = "State"),
+                data            = colDef(show = T, name = "", minWidth = 215, style = list(fontWeight = "bold")),
+                agerlse_median  = colDef(show = T, name = "", align = "right", minWidth = 215))
+              )
+  })
+
+  # get information on people on parole by education median depending on state selection
+  df_parole_profile_education_median <- reactive({filter(people_on_parole_education_median, state == input$state)})
+
+  # create reactable table using df_parole_profile_education()
+  output$table_parole_profile_education_median <- renderReactable({
+    reactable(df_parole_profile_education_median(),
+              style = list(fontFamily = "Graphik, sans-serif",
+                           fontSize = "1.5rem"),
+              theme = reactableTheme(
+                borderColor = neutralBkgndLight,
+                stripedColor = neutralBkgndLight,
+
+                cellStyle = list(display = "flex",
+                                 flexDirection = "column",
+                                 justifyContent = "center"),
+                headerStyle = list(borderColor = "#FFFFFF")),
+              defaultColDef = colDef(format = colFormat(separators = TRUE),
+                                     align = "left"),
+              rowStyle = function(index) {
+                if (index %in% c(1)) {
+                  list(`border-bottom` = "thin solid",
+                       `border-color` = neutralBkgndLight)
+                }
+              },
+              compact = TRUE,
+              sortable = FALSE,
+              fullWidth = FALSE,
+              columns = list(
+                state            = colDef(show = F, name = "State"),
+                data             = colDef(show = T, name = "", minWidth = 215, style = list(fontWeight = "bold")),
+                education_median = colDef(show = T, name = "", align = "right", minWidth = 215))
+    )
+  })
 
   ######################
-  # PAROLE ELIGIBILITY
+  # Parole eligibility
   ######################
 
   # Title of pie charts about parole eligibility
@@ -240,10 +389,6 @@ server <- function(input, output, session) {
   #             ))
   # })
 
-  # Parole Eligibility and Offense Type
-  output$parole_eligibility_offense_title <-
-    renderText({"Most Serious Sentenced Offense for People Eligible for Parole but not yet Released in 2020"})
-
   # Sentence explaining number of people eligible for release but not yet due to which offense type
   # "Of the X people eligible for release before 2020 but not yet released, the most serious offense was violent."
   df_ped_offense_type <- reactive({filter(current_ped_2020_offenses, state == input$state)})
@@ -282,37 +427,29 @@ server <- function(input, output, session) {
     reactable(df1,
               style = list(fontFamily = "Graphik, sans-serif",
                            fontSize = "1.5rem"),
-              theme = reactableTheme(cellStyle = list(display = "flex",
-                                                      flexDirection = "column",
-                                                      justifyContent = "center")),
+              theme = hc_reactable_theme,
               defaultColDef = colDef(format = colFormat(separators = TRUE),
                                      align = "left"),
               compact = TRUE,
               fullWidth = FALSE,
               columns = list(
                 offgeneral    = colDef(name = "Most Serious Sentenced Offense",
-                                       minWidth = 150,
-                                       style = list(position = "sticky",
-                                                    borderRight = "1px solid #d3d3d3")),
+                                       minWidth = 200),
                 n = colDef(name = "Number of People",
-                           minWidth = 95),
+                           minWidth = 100,
+                           align = "right"),
                 prop   = colDef(name = "Percentage of People Eligible for Parole but not yet Released",
-                                minWidth = 100,
+                                minWidth = 175,
+                                align = "right",
                                 format = colFormat(percent = TRUE, digits = 1))
               ))
   })
-
-  # Parole Eligibility Over Time
-  output$parole_eligibility_time_title <-
-    renderText({"Changes in Parole Eligibility Over Time (Select Years)"})
 
 
   ######################
   # Releases
   ######################
 
-  # Title of panel
-  output$releases_title <- renderText({"Releases from Prison"})
 
 
 
@@ -322,19 +459,14 @@ server <- function(input, output, session) {
   # Sentencing
   ######################
 
-  # Title of panel
-  output$sentencing_title <- renderText({"Sentencing"})
 
 
 
 
 
   ######################
-  # PAROLE BOARD
+  # Parole Board
   ######################
-
-  # Title of panel
-  output$parole_board_title <- renderText({"Parole Board Decision-Making"})
 
 
 
@@ -343,9 +475,6 @@ server <- function(input, output, session) {
   ######################
   # Disparities
   ######################
-
-  # Title of panel
-  output$parole_disparities_title <- renderText({"Racial, Ethnic, and Gender Disparities"})
 
 
 

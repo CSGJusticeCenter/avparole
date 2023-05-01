@@ -1,5 +1,12 @@
 
 
+
+hc_reactable_theme <- reactableTheme(borderColor = neutralBkgndLight,
+                                     stripedColor = neutralBkgndLight,
+                                     cellStyle = list(display = "flex",
+                                                      flexDirection = "column",
+                                                      justifyContent = "center"))
+
 # Highcharts theme for plots
 hc_theme_jc <- hc_theme(#colors = c("#D25E2D", "#EDB799", "#C7E8F5", "#236ca7", "#D6C246", "#dcdcdc"),
 
