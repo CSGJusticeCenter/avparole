@@ -14,23 +14,34 @@ load(paste0(sp_data_path, "/data/raw/ICPSR_38492-V1/ICPSR_38492/DS0002/38492-000
 load(paste0(sp_data_path, "/data/raw/ICPSR_38492-V1/ICPSR_38492/DS0003/38492-0003-Data.rda"))
 load(paste0(sp_data_path, "/data/raw/ICPSR_38492-V1/ICPSR_38492/DS0004/38492-0004-Data.rda"))
 
-# Load "Prisoners in 2020 - Statistical Tables"
+# load Prisoners in 2020 - Statistical Tables
+# https://bjs.ojp.gov/library/publications/prisoners-2020-statistical-tables
 prison_pop_by_race_state <- read.csv(paste0(sp_data_path, "/data/raw/p20st/p20stat02.csv"), skip = 10)
 
-# rename df names and clean variable names
-term_records <- da38492.0001 %>% clean_names()
+# load Annual Parole Survey Series in 2018
+# https://www.icpsr.umich.edu/web/NACJD/studies/38058
+load(paste0(sp_data_path, "/data/raw/ICPSR_38058-V1/ICPSR_38058/DS0001/38058-0001-Data.rda"))
 
-admissions   <- da38492.0002 %>% clean_names() %>%
+
+
+
+
+##########
+# Prepare NCRP data for analysis
+##########
+
+# rename df names and clean variable names
+ncrp_term_records <- da38492.0001 %>% clean_names()
+
+ncrp_admissions <- da38492.0002 %>% clean_names() %>%
   # create parole eligibility status with custom function
   fnc_create_parelig_status()
 
-releases   <- da38492.0003 %>% clean_names() %>%
-
+ncrp_releases   <- da38492.0003 %>% clean_names() %>%
   mutate(
     state        = str_sub(state, 6, -1),
     offgeneral   = str_sub(offgeneral, 5, -1),
     offdetail    = str_sub(offdetail, 5, -1),
-
     admtype      = str_sub(admtype, 5, -1),
     race         = str_sub(race, 5, -1),
     sex          = str_sub(sex, 5, -1),
@@ -38,17 +49,23 @@ releases   <- da38492.0003 %>% clean_names() %>%
     agerlse      = str_sub(agerlse, 5, -1),
     sentlgth     = str_sub(sentlgth, 5, -1),
     reltype      = str_sub(reltype, 5, -1),
-    timesrvd_rel = str_sub(timesrvd_rel, 5, -1)
-  )
+    timesrvd_rel = str_sub(timesrvd_rel, 5, -1))
 
-yearendpop   <- da38492.0004 %>% clean_names() %>%
+ncrp_yearendpop <- da38492.0004 %>% clean_names() %>%
   mutate(
     state = str_sub(state, 6, -1),
     offgeneral = str_sub(offgeneral, 5, -1),
-    race = str_sub(race, 5, -1)
-  ) %>%
+    race = str_sub(race, 5, -1)) %>%
   # create parole eligibility status with custom function
   fnc_create_parelig_status()
+
+
+
+
+
+##########
+# Prepare Prisoners in 2020 data for analysis
+##########
 
 # clean up file to create dataframe of state prison pop by race
 prison_pop_by_race_state <- prison_pop_by_race_state %>%
@@ -57,3 +74,17 @@ prison_pop_by_race_state <- prison_pop_by_race_state %>%
   select(-c(jurisdiction)) %>%
   rename(state = x) %>%
   mutate_all(~str_replace_all(.,",",""))
+
+
+
+
+##########
+# Annual Parole Survey Series in 2018 data for analysis
+##########
+
+aps_parole <- da38058.0001
+
+
+
+
+

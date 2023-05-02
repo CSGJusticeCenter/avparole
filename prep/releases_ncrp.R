@@ -1,7 +1,7 @@
 
 
 
-releases_clean <- releases %>%
+ncrp_releases_clean <- ncrp_releases %>%
 
   # create order for sentence length and time served length
   # for example, <1 is 1 and 1-1.9 is 2, and so on
@@ -46,13 +46,13 @@ releases_clean <- releases %>%
 
 
 # Subset to 2020 report
-releases_2020 <- releases_clean %>%
+ncrp_releases_2020 <- ncrp_releases_clean %>%
   filter(rptyear == 2020)
   # filter(!is.na(admityr) & !is.na(parelig_year_clean) & !is.na(mand_prisrel_year_clean) & !is.na(relyr)) # removes a lot of data
 
 
 # Get people on parole characteristics (race)
-people_on_parole_race <- releases_2020 %>%
+people_on_parole_race <- ncrp_releases_2020 %>%
   filter(timesrvd_rel_vs_sentlgth == "Less than Sentence Length Served") %>%
   filter(!is.na(race)) %>%
   filter(state != "Alabama") %>%
@@ -64,7 +64,7 @@ people_on_parole_race <- releases_2020 %>%
 
 
 # Get people on parole characteristics (sex)
-people_on_parole_sex <- releases_2020 %>%
+people_on_parole_sex <- ncrp_releases_2020 %>%
   filter(timesrvd_rel_vs_sentlgth == "Less than Sentence Length Served") %>%
   filter(!is.na(sex)) %>%
   # filter(state != "Alabama") %>%
@@ -76,7 +76,7 @@ people_on_parole_sex <- releases_2020 %>%
 
 
 # Get people on parole characteristics (age)
-people_on_parole_age <- releases_2020 %>%
+people_on_parole_age <- ncrp_releases_2020 %>%
   filter(timesrvd_rel_vs_sentlgth == "Less than Sentence Length Served") %>%
   filter(!is.na(agerlse)) %>%
   # filter(state != "Alabama") %>%
@@ -88,7 +88,7 @@ people_on_parole_age <- releases_2020 %>%
 
 
 # Get people on parole characteristics (education)
-people_on_parole_age_median <- releases_2020 %>%
+people_on_parole_age_median <- ncrp_releases_2020 %>%
   filter(timesrvd_rel_vs_sentlgth == "Less than Sentence Length Served") %>%
   filter(!is.na(agerlse)) %>%
   # filter(state != "Alabama") %>%
@@ -114,7 +114,7 @@ people_on_parole_age_median <- releases_2020 %>%
 
 
 # Get people on parole characteristics (education)
-people_on_parole_education_median <- releases_2020 %>%
+people_on_parole_education_median <- ncrp_releases_2020 %>%
   filter(timesrvd_rel_vs_sentlgth == "Less than Sentence Length Served") %>%
   filter(!is.na(education)) %>%
   # filter(state != "Alabama") %>%

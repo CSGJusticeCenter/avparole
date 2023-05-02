@@ -12,7 +12,7 @@
 ##########
 
 # filter to 2020 data
-parole_elgibility_2020 <- yearendpop %>%
+parole_elgibility_2020 <- ncrp_yearendpop %>%
   filter(rptyear == 2020)
 
 # get number and percentage of eligibility statuses

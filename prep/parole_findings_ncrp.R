@@ -1,7 +1,7 @@
 
 
 # clean data
-term_records_clean <- term_records %>%
+term_records_clean <- ncrp_term_records %>%
   mutate(
     state = str_sub(state, 6, -1))
 

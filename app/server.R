@@ -402,6 +402,7 @@ server <- function(input, output, session) {
              hcaes(x = offgeneral, y = prop),
              dataLabels = list(
                style = list(fontSize = "1.25em",
+                            fontWeight = "regular",
                             color = neutralBlackText),
                enabled = TRUE,
                format = "{point.offgeneral}")) %>%

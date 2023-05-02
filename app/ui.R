@@ -91,10 +91,11 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                                                                     # Parole Overview
                                                                     ##################
 
-                                                                    tabPanel(value="1","Parole Overview",
+                                                                    tabPanel(value="1","Overview",
 
                                                                              br(),br(),
                                                                              fluidRow(column(width = 6,
+                                                                                             align = "center",
                                                                                              div(id = "section-header",
                                                                                                  "Profile of People Released to Parole in 2020"),      br(),
                                                                                              reactableOutput("table_parole_profile_race"),             br(),
@@ -105,7 +106,7 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                                                                                              ),
                                                                                       column(width = 6,
                                                                                              div(id = "section-header",
-                                                                                                 "Change in X from X Year to Y Year"))),
+                                                                                                 "Another Finding TBD"))),
                                                                              br(), br()
 
                                                                     ), # end tabPanel
@@ -135,33 +136,17 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                                                                                column(width = 6,
                                                                                       div(id = "section-header",
                                                                                           "Most Serious Sentenced Offense for People Eligible for
-                                                                                          Parole but not yet Released in 2020")),
+                                                                                          Parole but not yet Released in 2020"), br(),
+                                                                                      div(id = "pie-chart",
+                                                                                          highchartOutput("pie_parole_elgibility_offense",
+                                                                                                          height = 250)), br(),
+                                                                                      div(id = "reactable-table",
+                                                                                          reactableOutput("table_parole_elgibility_offense"))),
                                                                                column(width = 6,
                                                                                       div(id = "section-header",
                                                                                           "More Information on Eligibility TBD"))
                                                                              ),
                                                                              br(),
-
-                                                                             # Pie chart
-                                                                             fluidRow(
-                                                                               column(width = 6,
-                                                                                      div(id = "pie-chart",
-                                                                                          highchartOutput("pie_parole_elgibility_offense",
-                                                                                                          height = 250))),
-                                                                               column(width = 6)
-                                                                             ),
-                                                                             br(),
-
-                                                                             # Reactable table
-                                                                             fluidRow(
-                                                                               column(width = 6,
-                                                                                      div(id = "reactable-table",
-                                                                                          reactableOutput("table_parole_elgibility_offense"))),
-                                                                               column(width = 6)
-                                                                             ),
-                                                                             br(), br(),
-
-
 
                                                                     ), # end tabPanel
 
@@ -273,7 +258,7 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                                                  column(width = 10,
                                                         div(id = "section-header", "Parole"), br(),
                                                         div(id = "section-body",
-                                                        "[Visual TBD] Determine sentencing states, indeterminate sentencing states", br(), br(),
+                                                        "[Visual TBD] Determinate sentencing states, indeterminate sentencing states", br(), br(),
                                                         "[Visual TBD] Truth in sentencing (TIS) grant program", br(), br(),
                                                         "[Interactive Graph] Ranked states for number of people or percentage of state poulation under US correctional supervision in X year", br(), br(),
                                                         "[Interactive Graph] Releases over time (conditional vs unconditional) as a percentage of all releases from X year to Y year", br(), br(),
