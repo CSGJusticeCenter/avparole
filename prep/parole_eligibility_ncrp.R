@@ -66,7 +66,8 @@ current_ped_2020_offenses <- parole_elgibility_2020 %>%
                   "Number of People with Parole<br>Eligibility but not yet Released: <br><b>",
                   scales::comma(n), "</b><br><br>",
                   "Percentage of Prison Population with Parole<br>Eligibility but not yet Released: <br><b>",
-                  paste(round(prop*100, 1), "%</b></b>", sep = ""), "<br>"))
+                  paste0(round(prop*100, 1), "%</b></b>", sep = ""), "<br>"),
+         chart_label = paste0(offgeneral, " <b>", round(prop*100, 0), "%</b>"))
 
 pop_2020_race <- parole_elgibility_2020 %>%
   filter(parelig_status != "Missing") %>%

@@ -389,37 +389,18 @@ server <- function(input, output, session) {
   #             ))
   # })
 
-  # Sentence explaining number of people eligible for release but not yet due to which offense type
-  # "Of the X people eligible for release before 2020 but not yet released, the most serious offense was violent."
+  # Filter data depending on state for pie chart showing the percentage of
+  # people eligible for release but not yet due to each offense type
   df_ped_offense_type <- reactive({filter(current_ped_2020_offenses, state == input$state)})
 
-  # Pie chart showing the percentage of people eligible for release but not yet due to each offense type
+  # Pie chart showing the percentage of people eligible for release but
+  # not yet due to each offense type
   output$pie_parole_elgibility_offense <- renderHighchart({
-
-    df_ped_offense_type() %>%
-
-      hchart("pie",
-             hcaes(x = offgeneral, y = prop),
-             dataLabels = list(
-               style = list(fontSize = "1.25em",
-                            fontWeight = "regular",
-                            color = neutralBlackText),
-               enabled = TRUE,
-               format = "{point.offgeneral}")) %>%
-
-      hc_add_theme(hc_theme_jc) %>%
-
-      hc_tooltip(formatter = JS("function(){return(this.point.tooltip)}")) %>%
-
-      hc_plotOptions(series = list(animation = FALSE,
-                                   cursor = "pointer",
-                                   borderWidth = 3),
-                     accessibility = list(enabled = TRUE,
-                                          keyboardNavigation = list(enabled = TRUE),
-                                          linkedDescription = 'TBD.',
-                                          landmarkVerbosity = "one"),
-                     area = list(accessibility = list(description = "TBD."))
-      )
+      all_pie_parole_elgibility_offense[[input$state]] %>%
+        highcharter::hc_add_dependency(name = "plugins/series-label.js") %>%
+        highcharter::hc_add_dependency(name = "plugins/accessibility.js") %>%
+        highcharter::hc_add_dependency(name = "plugins/exporting.js") %>%
+        highcharter::hc_add_dependency(name = "plugins/export-data.js")
   })
 
   # Reactable table showing the number of people eligible for release but not yet due to each offense type
@@ -451,7 +432,14 @@ server <- function(input, output, session) {
   # Releases
   ######################
 
-
+  # Pie chart showing the percentage of people released before, at, or after ped
+  output$pie_released_at_ped <- renderHighchart({
+    all_pie_released_at_ped [[input$state]] %>%
+      highcharter::hc_add_dependency(name = "plugins/series-label.js") %>%
+      highcharter::hc_add_dependency(name = "plugins/accessibility.js") %>%
+      highcharter::hc_add_dependency(name = "plugins/exporting.js") %>%
+      highcharter::hc_add_dependency(name = "plugins/export-data.js")
+  })
 
 
 

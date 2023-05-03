@@ -156,6 +156,23 @@ ui <- fluidPage(includeCSS("www/theme.css"),
 
                                                                     tabPanel(value="3","Releases from Prison",
 
+                                                                             # Title
+                                                                             br(), br(),
+                                                                             fluidRow(
+                                                                               column(width = 6,
+                                                                                      div(id = "section-header",
+                                                                                          "Timing of Release by Parole Eligibility"), br(),
+                                                                                      div(id = "pie-chart",
+                                                                                          highchartOutput("pie_released_at_ped",
+                                                                                                          height = 250)), br()
+                                                                               ),
+                                                                                      # div(id = "reactable-table",
+                                                                                      #     reactableOutput("table_name"))),
+                                                                               column(width = 6,
+                                                                                      div(id = "section-header",
+                                                                                          "More Information on Releases TBD"))
+                                                                             ),
+
                                                                              br(),br(),
                                                                              fluidRow(column(width = 1),
                                                                                       column(width = 10,
@@ -166,9 +183,7 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                                                                                              "How long after eligibility does release occur?", br(),br(),
                                                                                              "How does release vary by the person's demographic and criminal history characteristics?", br(),br(),
                                                                                              "What is the mean and median time between parole eligibility and release for those released after the PED, by maximum sentence length?", br(),br(),
-                                                                                             "How many people are currently eligible for release but still in prison? What percentage of the prison population is this?", br(),br(),
                                                                                              "Number/percentage of release types from X year to Y year.", br(),br(),
-                                                                                             "Marginal Effects of Year of Release on Days Between PED and Release for the X Offense Class (Days between PED and release by year of release)", br(),br(),
                                                                                              "Predicted probabilities of being released within 1 year of parole eligibility. For example (Male = 53%, Female = 65%, Max Sentence <2 years = 82%, Max Sentence +15 years-less than life = 34%, Race, Most Serious Sentence Offense)", br(),br()
                                                                                              )),
                                                                                       column(width = 1)),

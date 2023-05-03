@@ -51,6 +51,57 @@ ncrp_releases_2020 <- ncrp_releases_clean %>%
   # filter(!is.na(admityr) & !is.na(parelig_year_clean) & !is.na(mand_prisrel_year_clean) & !is.na(relyr)) # removes a lot of data
 
 
+
+
+
+########################################
+
+# Releases
+
+# How many people are being released at first eligibility?
+# How long after eligibility does release occur?
+# How does release vary by the person's demographic and criminal history characteristics?
+# What is the mean and median time between parole eligibility and release for those released after the PED, by maximum sentence length?
+
+########################################
+
+# How many people are being released at first eligibility?
+released_at_ped <- ncrp_releases_2020 %>%
+  mutate(released_at_ped_status = case_when(
+    time_between_release_ped < 0 ~ "Released before Parole Eligibility",
+    time_between_release_ped == 0 ~ "Released at Parole Eligibility",
+    time_between_release_ped > 0 ~ "Released after Parole Eligibility",
+    is.na(time_between_release_ped) ~ NA)) %>%
+  # remove states with NA's
+  filter(!is.na(released_at_ped_status) & state != "Illinois") %>%
+  group_by(state) %>%
+  count(released_at_ped_status) %>%
+  mutate(prop = n/sum(n),
+         prop_label = paste0(round(prop*100, 0), "%"),
+         chart_label = paste0(released_at_ped_status, " <b>", prop_label, "</b>")) %>%
+  mutate(tooltip =
+           paste0("<b>", state, "</b><br><br>",
+                  "Timing of Release: <b>",
+                  released_at_ped_status,
+                  "</b><br><br>",
+                  "Number of People: <b>",
+                  scales::comma(n),
+                  "</b><br><br>",
+                  "Percentage of People: <b>",
+                  prop_label, "</b></b>", sep = ""))
+
+
+
+
+
+
+
+########################################
+
+# Profile of People on Parole
+
+########################################
+
 # Get people on parole characteristics (race)
 people_on_parole_race <- ncrp_releases_2020 %>%
   filter(timesrvd_rel_vs_sentlgth == "Less than Sentence Length Served") %>%
@@ -141,6 +192,8 @@ people_on_parole_education_median <- ncrp_releases_2020 %>%
 theseFOLDERS <- c( "sharepoint" = paste0(sp_data_path, "/data/analysis"), "app" = "app/data")
 
 for (folder in theseFOLDERS){
+
+  save(released_at_ped,                    file=file.path(folder, "released_at_ped.rds"))
 
   save(people_on_parole_race,              file=file.path(folder, "people_on_parole_race.rds"))
   save(people_on_parole_sex,               file=file.path(folder, "people_on_parole_sex.rds"))

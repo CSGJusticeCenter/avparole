@@ -67,7 +67,7 @@ ncrp_pp_model_data <- ncrp_releases_clean %>%
 # https://druedin.com/2016/01/16/predicted-probabilities-in-r/
 # save the losgitic regression formula
 fmla <- release_within_1yr_ped ~ sex + race + admtype + offgeneral + sentlgth
-fmla <- release_within_1yr_ped ~ race
+fmla <- release_within_1yr_ped ~ sex
 
 # run logistic regression
 glm_model <- glm(fmla, family = "binomial", data = ncrp_pp_model_data)
@@ -75,7 +75,7 @@ summary(glm_model)
 
 # create new data for predictions
 newdata <- with(ncrp_pp_model_data,
-                data.frame(race = "White, non-Hispanic"))
+                data.frame(sex = "Female"))
 
 # calculate predictions
 predict(glm_model, newdata, type="response")
