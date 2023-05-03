@@ -1,3 +1,11 @@
+#######################################
+# Project: AV Parole
+# File: parole_findings_ncrp.R
+# Authors: Mari Roberts
+# Date last updated: May 3, 2023 (MAR)
+# Description:
+#    Parole findings TBD tables and graphics for shiny app
+#######################################
 
 
 # clean data

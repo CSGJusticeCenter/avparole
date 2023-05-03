@@ -1,5 +1,10 @@
 
 
+# State Donuts
+load(file = "data/all_donut_currently_eligible.rds")
+load(file = "data/all_donut_future_eligible.rds")
+
+
 # Parole Overview
 load(file = "data/people_on_parole_race.rds")
 load(file = "data/people_on_parole_sex.rds")

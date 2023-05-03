@@ -1,3 +1,11 @@
+#######################################
+# Project: AV Parole
+# File: releases_ncrp.R
+# Authors: Mari Roberts
+# Date last updated: May 3, 2023 (MAR)
+# Description:
+#    Releases from prison tables and graphics for shiny app
+#######################################
 
 
 

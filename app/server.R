@@ -2,7 +2,7 @@
 # Project: AV Parole
 # File: server.R
 # Authors: Mari Roberts
-# Date last updated: April 25, 2023 (MAR)
+# Date last updated: May 3, 2023 (MAR)
 # Description:
 #    Server for shiny app
 #######################################
@@ -173,153 +173,24 @@ server <- function(input, output, session) {
   output$top_pie_title3 <-
     renderText({paste0("Another", "<br>", "Finding TBD")})
 
-  # Get parole eligibility data
-  df_parole_eligibility <-
-    reactive({filter(parole_eligibility_table_2020, state == input$state)})
-
-  # Get parole eligibility data for pie charts
-  df_parole_eligibility_current <- reactive({
-    df <- parole_eligibility_table_2020 %>%
-    filter(state == input$state) %>%
-    select(state, current_perc) %>%
-    mutate(rest = 1-current_perc) %>%
-    pivot_longer(cols      = c(current_perc:rest),
-                 names_to  = "type",
-                 values_to = "pct") %>%
-    mutate(tooltip =
-             case_when(type == "current_perc" ~
-                         paste0("<b>", state, "</b><br>",
-                                "Percentage of People Eligible for Release:<br>",
-                                paste(round(pct*100, 0), "%</b>", sep = ""), "<br>"),
-                       type == "rest" ~
-                         paste0("<b>", state, "</b><br>",
-                                "Percentage of People Not Eligible for Release:<br>",
-                                paste(round(pct*100, 0), "%</b>", sep = ""), "<br>")))
-  })
-
-  # Get parole eligibility data for pie charts
-  df_parole_eligibility_future <- reactive({
-    df <- parole_eligibility_table_2020 %>%
-      filter(state == input$state) %>%
-      select(state, future_perc) %>%
-      mutate(rest = 1-future_perc) %>%
-      pivot_longer(cols      = c(future_perc:rest),
-                   names_to  = "type",
-                   values_to = "pct") %>%
-      mutate(tooltip =
-               case_when(type == "future_perc" ~
-                           paste0("<b>", state, "</b><br>",
-                                  "Percentage of People Eligible for Release in the Future:<br>",
-                                  paste(round(pct*100, 0), "%</b>", sep = ""), "<br>"),
-                         type == "rest" ~
-                           paste0("<b>", state, "</b><br>",
-                                  "Percentage of People Not Eligible for Release in the Future:<br>",
-                                  paste(round(pct*100, 0), "%</b>", sep = ""), "<br>")))
-  })
-
-  # Pie chart showing Parole Eligibility in Currently
-  output$pie_currently_eligible <- renderHighchart({
-
-    df1 <- df_parole_eligibility_current() %>%
-      filter(type == "current_perc") %>%
-      mutate(pctlabel = paste0(round(pct*100,0), "%"))
-
-    highchart() %>%
-
-      hc_add_series(type = "pie",
-                    data = df1,
-                    hcaes(state, pct),
-                    size = "100%",
-                    name = "TBD",
-                    center = c(50, 50),
-                    innerSize="60%",
-                    dataLabels = list(
-                      style = list(fontSize = "2em",
-                                   color = neutralBlackText),
-                      enabled = TRUE,
-                      distance= -65,
-                      format = "{point.pctlabel}")
-      ) %>%
-      hc_add_series(type = "pie",
-                    data = df_parole_eligibility_current(),
-                    hcaes(state, pct),
-                    size = "100%",
-                    name = "TBD",
-                    center = c(50, 50),
-                    innerSize="60%",
-                    dataLabels = list(enabled = FALSE)
-      ) %>%
-
-      hc_tooltip(formatter = JS("function(){return(this.point.tooltip)}")) %>%
-
-      hc_add_theme(hc_theme_jc_pie) %>%
-
-      hc_plotOptions(innersize="50%",
-                     startAngle=90,
-                     endAngle=90,
-                     center=list('50%', '75%'),
-                     size='110%',
-                     series = list(animation = FALSE,
-                                   cursor = "pointer",
-                                   borderWidth = 3),
-                     accessibility = list(enabled = TRUE,
-                                          keyboardNavigation = list(enabled = TRUE),
-                                          linkedDescription = 'TBD.',
-                                          landmarkVerbosity = "one"),
-                     area = list(accessibility = list(description = "TBD.")))
+  # Pie chart showing Parole Eligibility in the Future
+  output$donut_currently_eligible <- renderHighchart({
+    all_donut_currently_eligible[[input$state]] %>%
+      highcharter::hc_add_dependency(name = "plugins/series-label.js") %>%
+      highcharter::hc_add_dependency(name = "plugins/accessibility.js") %>%
+      highcharter::hc_add_dependency(name = "plugins/exporting.js") %>%
+      highcharter::hc_add_dependency(name = "plugins/export-data.js")
   })
 
   # Pie chart showing Parole Eligibility in the Future
-  output$pie_future_eligible <- renderHighchart({
-
-    df1 <- df_parole_eligibility_future() %>%
-      filter(type == "future_perc") %>%
-      mutate(pctlabel = paste0(round(pct*100,0), "%"))
-
-    highchart() %>%
-
-      hc_add_series(type = "pie",
-                    data = df1,
-                    hcaes(state, pct),
-                    size = "100%",
-                    name = "TBD",
-                    center = c(50, 50),
-                    innerSize="60%",
-                    dataLabels = list(
-                      style = list(fontSize = "2em",
-                                   color = neutralBlackText),
-                      enabled = TRUE,
-                      distance= -65,
-                      format = "{point.pctlabel}")
-      ) %>%
-      hc_add_series(type = "pie",
-                    data = df_parole_eligibility_future(),
-                    hcaes(state, pct),
-                    size = "100%",
-                    name = "TBD",
-                    center = c(50, 50),
-                    innerSize="60%",
-                    dataLabels = list(enabled = FALSE)
-      ) %>%
-
-      hc_tooltip(formatter = JS("function(){return(this.point.tooltip)}")) %>%
-
-      hc_add_theme(hc_theme_jc_pie) %>%
-
-      hc_plotOptions(innersize="50%",
-                     startAngle=90,
-                     endAngle=90,
-                     center=list('50%', '75%'),
-                     size='110%',
-                     series = list(animation = FALSE,
-                                   cursor = "pointer",
-                                   borderWidth = 3),
-                     accessibility = list(enabled = TRUE,
-                                          keyboardNavigation = list(enabled = TRUE),
-                                          linkedDescription = 'TBD.',
-                                          landmarkVerbosity = "one"),
-                     area = list(accessibility = list(description = "TBD.")))
+  output$donut_future_eligible <- renderHighchart({
+    all_donut_future_eligible[[input$state]] %>%
+      highcharter::hc_add_dependency(name = "plugins/series-label.js") %>%
+      highcharter::hc_add_dependency(name = "plugins/accessibility.js") %>%
+      highcharter::hc_add_dependency(name = "plugins/exporting.js") %>%
+      highcharter::hc_add_dependency(name = "plugins/export-data.js")
   })
+
 
   # # Parole Eligibility in Currently
   # output$table_parole_elgibility_current <- renderReactable({

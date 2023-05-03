@@ -2,7 +2,7 @@
 # Project: AV Parole
 # File: ui.R
 # Authors: Mari Roberts
-# Date last updated: April 28, 2023 (MAR)
+# Date last updated: May 3, 2023 (MAR)
 # Description:
 #    User interface for shiny app
 #######################################
@@ -73,11 +73,11 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                                         fluidRow(column(width = 3),
                                                  column(width = 2,
                                                         div(id = "pie-chart",
-                                                            highchartOutput("pie_currently_eligible",
+                                                            highchartOutput("donut_currently_eligible",
                                                                             height = 150))),
                                                  column(width = 2,
                                                         div(id = "pie-chart",
-                                                            highchartOutput("pie_future_eligible",
+                                                            highchartOutput("donut_future_eligible",
                                                                             height = 150))),
                                                  column(width = 5)),
                                         br(),
