@@ -50,13 +50,13 @@ ncrp_releases_clean <- ncrp_releases %>%
 
          time_between_release_ped = relyr - parelig_year_clean,
          time_between_ped_admission = parelig_year_clean - admityr,
-         time_between_mandatoryrelease_release = mand_prisrel_year_clean - relyr)
+         time_between_mandatoryrelease_release = mand_prisrel_year_clean - relyr) %>%
 
-
-# Subset to 2020 report
-ncrp_releases_2020 <- ncrp_releases_clean %>%
-  filter(rptyear == 2020)
-  # filter(!is.na(admityr) & !is.na(parelig_year_clean) & !is.na(mand_prisrel_year_clean) & !is.na(relyr)) # removes a lot of data
+  mutate(released_at_ped_status = case_when(
+    time_between_release_ped < 0 ~ "Released before Parole Eligibility",
+    time_between_release_ped == 0 ~ "Released at Parole Eligibility",
+    time_between_release_ped > 0 ~ "Released after Parole Eligibility",
+    is.na(time_between_release_ped) ~ NA))
 
 
 
@@ -64,7 +64,29 @@ ncrp_releases_2020 <- ncrp_releases_clean %>%
 
 ########################################
 
-# Releases
+# Released to Parole Over Time
+
+########################################
+
+# count number of people released to parole by year and state
+ncrp_released_to_parole <- ncrp_releases_clean %>%
+  filter(timesrvd_rel_vs_sentlgth == "Less than Sentence Length Served") %>%
+  filter(state != "Alabama") %>%
+  filter(reltype != "Other release (including death, transfer, AWOL, escape)") %>%
+  group_by(rptyear, state) %>%
+  summarise(releases_to_parole = n())
+
+
+
+
+
+
+
+
+
+########################################
+
+# Releases in 2020
 
 # How many people are being released at first eligibility?
 # How long after eligibility does release occur?
@@ -73,13 +95,17 @@ ncrp_releases_2020 <- ncrp_releases_clean %>%
 
 ########################################
 
+
+# Subset to 2020 report
+ncrp_releases_2020 <- ncrp_releases_clean %>%
+  filter(rptyear == 2020)
+# filter(!is.na(admityr) &
+# !is.na(parelig_year_clean) &
+# !is.na(mand_prisrel_year_clean) &
+# !is.na(relyr)) # removes a lot of data
+
 # How many people are being released at first eligibility?
-released_at_ped <- ncrp_releases_2020 %>%
-  mutate(released_at_ped_status = case_when(
-    time_between_release_ped < 0 ~ "Released before Parole Eligibility",
-    time_between_release_ped == 0 ~ "Released at Parole Eligibility",
-    time_between_release_ped > 0 ~ "Released after Parole Eligibility",
-    is.na(time_between_release_ped) ~ NA)) %>%
+ncrp_released_at_ped <- ncrp_releases_2020 %>%
   # remove states with NA's
   filter(!is.na(released_at_ped_status) & state != "Illinois") %>%
   group_by(state) %>%
@@ -111,7 +137,7 @@ released_at_ped <- ncrp_releases_2020 %>%
 ########################################
 
 # Get people on parole characteristics (race)
-people_on_parole_race <- ncrp_releases_2020 %>%
+people_released_to_parole_race <- ncrp_releases_2020 %>%
   filter(timesrvd_rel_vs_sentlgth == "Less than Sentence Length Served") %>%
   filter(!is.na(race)) %>%
   filter(state != "Alabama") %>%
@@ -123,7 +149,7 @@ people_on_parole_race <- ncrp_releases_2020 %>%
 
 
 # Get people on parole characteristics (sex)
-people_on_parole_sex <- ncrp_releases_2020 %>%
+people_released_to_parole_sex <- ncrp_releases_2020 %>%
   filter(timesrvd_rel_vs_sentlgth == "Less than Sentence Length Served") %>%
   filter(!is.na(sex)) %>%
   # filter(state != "Alabama") %>%
@@ -135,7 +161,7 @@ people_on_parole_sex <- ncrp_releases_2020 %>%
 
 
 # Get people on parole characteristics (age)
-people_on_parole_age <- ncrp_releases_2020 %>%
+people_released_to_parole_age <- ncrp_releases_2020 %>%
   filter(timesrvd_rel_vs_sentlgth == "Less than Sentence Length Served") %>%
   filter(!is.na(agerlse)) %>%
   # filter(state != "Alabama") %>%
@@ -147,7 +173,7 @@ people_on_parole_age <- ncrp_releases_2020 %>%
 
 
 # Get people on parole characteristics (education)
-people_on_parole_age_median <- ncrp_releases_2020 %>%
+people_released_to_parole_age_median <- ncrp_releases_2020 %>%
   filter(timesrvd_rel_vs_sentlgth == "Less than Sentence Length Served") %>%
   filter(!is.na(agerlse)) %>%
   # filter(state != "Alabama") %>%
@@ -173,7 +199,7 @@ people_on_parole_age_median <- ncrp_releases_2020 %>%
 
 
 # Get people on parole characteristics (education)
-people_on_parole_education_median <- ncrp_releases_2020 %>%
+people_released_to_parole_education_median <- ncrp_releases_2020 %>%
   filter(timesrvd_rel_vs_sentlgth == "Less than Sentence Length Served") %>%
   filter(!is.na(education)) %>%
   # filter(state != "Alabama") %>%
@@ -201,13 +227,14 @@ theseFOLDERS <- c( "sharepoint" = paste0(sp_data_path, "/data/analysis"), "app" 
 
 for (folder in theseFOLDERS){
 
-  save(released_at_ped,                    file=file.path(folder, "released_at_ped.rds"))
+  save(ncrp_released_at_ped,                        file=file.path(folder, "ncrp_released_at_ped.rds"))
+  save(ncrp_released_to_parole,                     file=file.path(folder, "ncrp_released_to_parole.rds"))
 
-  save(people_on_parole_race,              file=file.path(folder, "people_on_parole_race.rds"))
-  save(people_on_parole_sex,               file=file.path(folder, "people_on_parole_sex.rds"))
-  save(people_on_parole_age,               file=file.path(folder, "people_on_parole_age.rds"))
-  save(people_on_parole_age_median,        file=file.path(folder, "people_on_parole_age_median.rds"))
-  save(people_on_parole_education_median,  file=file.path(folder, "people_on_parole_education_median.rds"))
+  save(people_released_to_parole_race,              file=file.path(folder, "people_released_to_parole_race.rds"))
+  save(people_released_to_parole_sex,               file=file.path(folder, "people_released_to_parole_sex.rds"))
+  save(people_released_to_parole_age,               file=file.path(folder, "people_released_to_parole_age.rds"))
+  save(people_released_to_parole_age_median,        file=file.path(folder, "people_released_to_parole_age_median.rds"))
+  save(people_released_to_parole_education_median,  file=file.path(folder, "people_released_to_parole_education_median.rds"))
 
 
 }

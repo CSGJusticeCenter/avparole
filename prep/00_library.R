@@ -2,7 +2,7 @@
 # Project: AV Parole
 # File: library.R
 # Authors: Mari Roberts
-# Date last updated: March 13, 2023 (MAR)
+# Date last updated: May 5, 2023 (MAR)
 # Description:
 #    Load packages and custom functions
 #######################################
@@ -39,25 +39,24 @@ extrafont::loadfonts(quiet = TRUE)
 loadfonts(device="win")
 showtext_auto()
 
-##########
-# Custom functions
-##########
+###################
+# Colors
+###################
 
-# custom function to create parole eligibility status
-fnc_create_parelig_status <- function(df){
+# neutral colors
+# neutralBkgndLight    <- "#F4F6F6"
+neutralBkgndLight    <- "#e7e7e7"
+neutralBkgndMedium   <- "#DADFDF"
+neutralBkgndDisabled <- "#B2B9B9"
+neutralDarkSubText   <- "#637070"
+neutralBlackText     <- "#3E4B4B"
 
-  lev_parelig_status <- c(
-    "Current"
-    , "Future"
-    , "Missing")
-
-  df %>%
-    mutate(
-      parelig_status = case_when(
-          parelig_year <  rptyear ~ lev_parelig_status[1] # if year of parole eligibility is less than year reported to NCRP, then "currently eligible for parole"
-        , parelig_year >= rptyear ~ lev_parelig_status[2] # if year of parole eligibility is more than or equal to year reported to NCRP, then "eligible for parole in the future"
-        , is.na(parelig_year)     ~ lev_parelig_status[3] # if year of parole eligibility NA, then "missing data on parole eligibility"
-      )
-      , parelig_status = factor(parelig_status, levels = lev_parelig_status)
-    )
-}
+# https://community.holistics.io/t/launched-more-accessible-and-modern-color-palettes/746
+# contrasting palette 1
+blue     <- "#0061e4"
+teal     <- "#00aba0"
+darkblue <- "#003474"
+purple   <- "#c376fb"
+red      <- "#c60040"
+yellow   <- "#ffaf00"
+orange   <- "#ff6400"

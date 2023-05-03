@@ -20,7 +20,7 @@ readRenviron("~/.Renviron")
 ##########################
 
 # warning message: NA's will be created for text that isnt numeric
-state_prison_pop <- prison_pop_by_race_state %>%
+state_prison_pop <- prison_pop_by_race_state_2020 %>%
   pivot_longer(cols = c(total:did_not_report), names_to = "race", values_to = "prison_pop") %>%
   mutate(prison_pop = as.numeric(prison_pop)) %>%
   filter(race != "total" &

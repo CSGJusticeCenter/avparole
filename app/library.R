@@ -35,3 +35,5 @@ library(tidyr)
 # Load fonts
 font_add("Graphik",     regular = "www/fonts/Graphik.ttf")
 font_add("GraphikBold", regular = "www/fonts/GraphikBold.ttf")
+
+

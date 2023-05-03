@@ -6,11 +6,11 @@ load(file = "data/all_donut_future_eligible.rds")
 
 
 # Parole Overview
-load(file = "data/people_on_parole_race.rds")
-load(file = "data/people_on_parole_sex.rds")
-load(file = "data/people_on_parole_age.rds")
-load(file = "data/people_on_parole_age_median.rds")
-load(file = "data/people_on_parole_education_median.rds")
+load(file = "data/people_released_to_parole_race.rds")
+load(file = "data/people_released_to_parole_sex.rds")
+load(file = "data/people_released_to_parole_age.rds")
+load(file = "data/people_released_to_parole_age_median.rds")
+load(file = "data/people_released_to_parole_education_median.rds")
 
 
 # Parole Eligibility
@@ -21,6 +21,7 @@ load(file = "data/current_ped_2020_offenses.rds")
 
 # Releases from Prison
 load(file = "data/all_pie_released_at_ped.rds")
+load(file = "data/all_line_pop_released_to_parole.rds")
 
 
 # RRI

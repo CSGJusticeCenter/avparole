@@ -1,4 +1,65 @@
 
+
+# prepare annual parole survey data for analysis
+fnc_aps_prepare <- function(df){
+
+  df <- df %>%
+  mutate(rptyear = as.numeric(rptyear)) %>%
+  select(state,
+         rptyear,
+         endisrel,
+         enmanrel,
+         enreltsr) %>%
+  mutate(released_to_parole =
+           rowSums(.[c("endisrel", "enmanrel", "enreltsr")],
+                   na.rm = TRUE),
+         released_to_parole =
+           ifelse(released_to_parole == 0, NA, released_to_parole))
+
+  return(df)
+}
+
+# prepare annual parole survey data for analysis
+# before 2008, there was no enreltsr variable so make NA
+fnc_aps_prepare_pre2008 <- function(df){
+
+  df <- df %>%
+    mutate(enreltsr = NA,
+           rptyear = as.numeric(rptyear)) %>%
+    select(state,
+           rptyear,
+           endisrel,
+           enmanrel,
+           enreltsr) %>%
+    mutate(released_to_parole =
+             rowSums(.[c("endisrel", "enmanrel")],
+                     na.rm = TRUE),
+           released_to_parole =
+             ifelse(released_to_parole == 0, NA, released_to_parole))
+
+  return(df)
+}
+
+
+# custom function to create parole eligibility status
+# if year of parole eligibility is less than year reported to NCRP, then "currently eligible for parole"
+# if year of parole eligibility is more than or equal to year reported to NCRP, then "eligible for parole in the future"
+# if year of parole eligibility NA, then "missing data on parole eligibility"
+fnc_create_parelig_status <- function(df){
+
+  lev_parelig_status <- c("Current", "Future", "Missing")
+
+  df %>%
+    mutate(
+      parelig_status = case_when(
+        parelig_year <  rptyear ~ lev_parelig_status[1],
+        parelig_year >= rptyear ~ lev_parelig_status[2],
+        is.na(parelig_year)     ~ lev_parelig_status[3]),
+      parelig_status = factor(parelig_status,
+                              levels = lev_parelig_status))
+
+}
+
 # Highcharts theme for plots
 hc_theme_jc <- hc_theme(#colors = c("#D25E2D", "#EDB799", "#C7E8F5", "#236ca7", "#D6C246", "#dcdcdc"),
 
@@ -55,7 +116,6 @@ hc_theme_jc_pie <- hc_theme(
     list(align = "center",
          style =
            list(fontFamily = "Graphik",
-                fontWeight = "bold",
                 color      = neutralBlackText,
                 fontSize   = "14px")),
   chart =

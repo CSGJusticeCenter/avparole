@@ -259,7 +259,14 @@ Titles
   font-family: Graphik;
 }
 
-
+/* Body settings */
+#footnote {
+  color: #3E4B4B;
+  text-align: left;
+  font-style: italic;
+  font-size: 12px;
+  font-family: Graphik;
+}
 
 
 /*##################################################################################################################
@@ -272,6 +279,12 @@ Highcharts
   /*margin: 0 auto*/
 }
 
+
+#line-chart{
+  color: #3E4B4B;
+  /*height: 100px;*/
+  /*margin: 0 auto*/
+}
 
 
 
