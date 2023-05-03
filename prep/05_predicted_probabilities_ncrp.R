@@ -3,11 +3,12 @@
 library(dplyr)
 
 # prepare data for analysis
+# ncrp_releases_clean created in releases_ncrp.R
 ncrp_pp_model_data <- ncrp_releases_clean %>%
   # filter to 2020 report year
   # remove releases that were classified as "other"
   filter(rptyear == 2020) %>%
-  # filter(state == "Georgia") %>%
+  filter(state == x) %>%
   filter(reltype != "Other release (including death, transfer, AWOL, escape)") %>%
   filter(admtype != "Other admission (including unsentenced, transfer, AWOL/escapee return)") %>%
   filter(race != "Other race(s), non-Hispanic") %>%
@@ -66,16 +67,67 @@ ncrp_pp_model_data <- ncrp_releases_clean %>%
 # https://druedin.com/2016/01/16/predicted-probabilities-in-r/
 # save the losgitic regression formula
 fmla <- release_within_1yr_ped ~ sex + race + admtype + offgeneral + sentlgth
-fmla <- release_within_1yr_ped ~ sex
 
 # run logistic regression
 glm_model <- glm(fmla, family = "binomial", data = ncrp_pp_model_data)
 summary(glm_model)
 
-# create new data for predictions
-newdata <- with(ncrp_pp_model_data,
-                data.frame(sex = "Female"))
+# calculate the predicted probabilities for each combination of predictor variables
+new_data <- expand.grid(sex        = levels(ncrp_pp_model_data$sex),
+                        race       = levels(ncrp_pp_model_data$race),
+                        admtype    = levels(ncrp_pp_model_data$admtype),
+                        offgeneral = levels(ncrp_pp_model_data$offgeneral),
+                        sentlgth   = levels(ncrp_pp_model_data$sentlgth))
+new_data$release_within_1yr_ped <- predict(glm_model,
+                                           newdata = new_data,
+                                           type = "response")
 
-# calculate predictions
-predict(glm_model, newdata, type="response")
+# save the predicted probabilities for each race
+pp_by_race <- aggregate(release_within_1yr_ped ~ race,
+                        data = new_data, FUN = mean)
 
+# save the predicted probabilities for each sex
+pp_by_sex <- aggregate(release_within_1yr_ped ~ sex,
+                       data = new_data, FUN = mean)
+
+# save the predicted probabilities for each admtype
+pp_by_admtype <- aggregate(release_within_1yr_ped ~ admtype,
+                           data = new_data, FUN = mean)
+
+# save the predicted probabilities for each offgeneral
+pp_by_offgeneral <- aggregate(release_within_1yr_ped ~ offgeneral,
+                              data = new_data, FUN = mean)
+
+# save the predicted probabilities for each sentlgth
+pp_by_sentlgth <- aggregate(release_within_1yr_ped ~ sentlgth,
+                            data = new_data, FUN = mean)
+
+
+
+
+
+################################ TO DO
+# write a loop and function to find predictive probabilties for each state
+
+
+
+
+
+
+
+
+##########
+# Save data
+##########
+
+theseFOLDERS <- c( "sharepoint" = paste0(sp_data_path, "/data/analysis"), "app" = "app/data")
+
+for (folder in theseFOLDERS){
+
+  save(all_pp_by_race,       file=file.path(folder, "all_pp_by_race.rds"))
+  save(all_pp_by_sex,        file=file.path(folder, "all_pp_by_sex.rds"))
+  save(all_pp_by_admtype,    file=file.path(folder, "all_pp_by_admtype.rds"))
+  save(all_pp_by_offgeneral, file=file.path(folder, "all_pp_by_offgeneral.rds"))
+  save(all_pp_by_sentlgth,   file=file.path(folder, "all_pp_by_sentlgth.rds"))
+
+}

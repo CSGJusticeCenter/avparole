@@ -26,3 +26,11 @@ load(file = "data/all_line_pop_released_to_parole.rds")
 
 # RRI
 load(file = "data/race_eth_rri_table.rds")
+
+
+# Predicted Probabilities
+load(file = "data/all_pp_by_race.rds")
+load(file = "data/all_pp_by_sex.rds")
+load(file = "data/all_pp_by_admtype.rds")
+load(file = "data/all_pp_by_offgeneral.rds")
+load(file = "data/all_pp_by_sentlgth.rds")

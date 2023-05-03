@@ -19,8 +19,7 @@ server <- function(input, output, session) {
   # create reactable table using df_parole_profile_race()
   output$table_parole_profile_race <- renderReactable({
     reactable(df_parole_profile_race(),
-              style = list(fontFamily = "Graphik, sans-serif",
-                           fontSize = "1.5rem"),
+              style = hc_reactable_style,
               theme = hc_reactable_theme,
               defaultColDef = colDef(format = colFormat(separators = TRUE),
                                      align = "left"),
@@ -49,8 +48,7 @@ server <- function(input, output, session) {
   # create reactable table using df_parole_profile_sex()
   output$table_parole_profile_sex <- renderReactable({
     reactable(df_parole_profile_sex(),
-              style = list(fontFamily = "Graphik, sans-serif",
-                           fontSize = "1.5rem"),
+              style = hc_reactable_style,
               theme = hc_reactable_theme,
 
               defaultColDef = colDef(format = colFormat(separators = TRUE),
@@ -83,10 +81,8 @@ server <- function(input, output, session) {
   # create reactable table using df_parole_profile_age()
   output$table_parole_profile_age <- renderReactable({
     reactable(df_parole_profile_age(),
-              style = list(fontFamily = "Graphik, sans-serif",
-                           fontSize = "1.5rem"),
+              style = hc_reactable_style,
               theme = hc_reactable_theme,
-
               defaultColDef = colDef(format = colFormat(separators = TRUE),
                                      align = "left"),
               compact = TRUE,
@@ -118,8 +114,7 @@ server <- function(input, output, session) {
   # create reactable table using df_parole_profile_age()
   output$table_parole_profile_age_median <- renderReactable({
     reactable(df_parole_profile_age_median(),
-              style = list(fontFamily = "Graphik, sans-serif",
-                           fontSize = "1.5rem"),
+              style = hc_reactable_style,
               theme = reactableTheme(
                 borderColor = neutralBkgndLight,
                 stripedColor = neutralBkgndLight,
@@ -159,12 +154,10 @@ server <- function(input, output, session) {
   # create reactable table using df_parole_profile_education()
   output$table_parole_profile_education_median <- renderReactable({
     reactable(df_parole_profile_education_median(),
-              style = list(fontFamily = "Graphik, sans-serif",
-                           fontSize = "1.5rem"),
+              style = hc_reactable_style,
               theme = reactableTheme(
                 borderColor = neutralBkgndLight,
                 stripedColor = neutralBkgndLight,
-
                 cellStyle = list(display = "flex",
                                  flexDirection = "column",
                                  justifyContent = "center"),
@@ -326,8 +319,7 @@ server <- function(input, output, session) {
       arrange(-n)
 
     reactable(df1,
-              style = list(fontFamily = "Graphik, sans-serif",
-                           fontSize = "1.5rem"),
+              style = hc_reactable_style,
               theme = hc_reactable_theme,
               defaultColDef = colDef(format = colFormat(separators = TRUE),
                                      align = "left"),
@@ -361,6 +353,12 @@ server <- function(input, output, session) {
       highcharter::hc_add_dependency(name = "plugins/exporting.js") %>%
       highcharter::hc_add_dependency(name = "plugins/export-data.js")
   })
+
+  # Reactable tables showing the predicted probabilties of being released
+  # within 1 year of parole eligbility
+  df_pp_by_race <-
+    reactive({filter(all_pp,
+                     state == input$state)})
 
 
 

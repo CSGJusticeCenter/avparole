@@ -109,7 +109,7 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                                                                                                  "Prison Populations and the Number of People Released to Parole by Reporting Year"),
                                                                                              div(id = "line-chart",
                                                                                                  highchartOutput("line_pop_released_to_parole",
-                                                                                                                 height = 250)),
+                                                                                                                 height = 350)),
                                                                                              div(id = "footnote",
                                                                                                        "Source: NCRP Year End Population (2000-2020),
                                                                                                         Annual Parole Survey (2000-2018)"),
@@ -167,7 +167,7 @@ ui <- fluidPage(includeCSS("www/theme.css"),
 
                                                                     tabPanel(value="3","Releases from Prison",
 
-                                                                             # Title
+                                                                             # Timing of Release by Parole Eligibility
                                                                              br(), br(),
                                                                              fluidRow(
                                                                                column(width = 6,
@@ -182,6 +182,24 @@ ui <- fluidPage(includeCSS("www/theme.css"),
                                                                                       br()),
                                                                                       # div(id = "reactable-table",
                                                                                       #     reactableOutput("table_name"))),
+                                                                               column(width = 6,
+                                                                                      div(id = "section-header",
+                                                                                          "More Information on Releases TBD"))),
+
+                                                                             # Predicted Probabilities of Being Released Within 1 Year of Parole Eligibility
+                                                                             br(), br(),
+                                                                             fluidRow(
+                                                                               column(width = 6,
+                                                                                      align = "center",
+                                                                                      div(id = "section-header",
+                                                                                          "Predicted Probabilities of Being Released Within 1 Year of Parole Eligibility"), br(),
+                                                                                      reactableOutput("table_pp_by_race"),       br(),
+                                                                                      reactableOutput("table_pp_by_sex"),        br(),
+                                                                                      reactableOutput("table_pp_by_admtype"),    br(),
+                                                                                      reactableOutput("table_pp_by_offgeneral"), br(),
+                                                                                      reactableOutput("table_pp_by_sentlgth"),   br(),
+                                                                                      div(id = "footnote", "Source: NCRP Releases (2020)"),
+                                                                                      br()),
                                                                                column(width = 6,
                                                                                       div(id = "section-header",
                                                                                           "More Information on Releases TBD"))),

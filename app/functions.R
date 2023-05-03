@@ -8,4 +8,7 @@ hc_reactable_theme <-
                                   flexDirection = "column",
                                   justifyContent = "center"))
 
-
+hc_reactable_style <- list(
+  fontFamily = "Graphik, sans-serif",
+  fontSize = "1.5rem"
+)
